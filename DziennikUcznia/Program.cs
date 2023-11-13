@@ -17,6 +17,15 @@ namespace DziennikUcznia
                 builder.Configuration.GetConnectionString("DefaultConnection")
                 ));
 
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+       .AddCookie(options =>
+       {
+           options.LoginPath = "/Account/Profile";
+           options.AccessDeniedPath = "/Account/Register";
+       });
+
+            builder.Services.BuildServiceProvider().GetService<ApplicationDbContext>().Database.Migrate();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -27,18 +36,11 @@ namespace DziennikUcznia
                 app.UseHsts();
             }
 
-       //builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-       //.AddCookie(options =>
-       //{
-       //    options.LoginPath = "/Login/Index";
-       //    options.AccessDeniedPath = "/Home/AccessDenied";
-       //});
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(

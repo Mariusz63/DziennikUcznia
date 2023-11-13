@@ -1,12 +1,11 @@
 ﻿using BulkyBookWeb.Data;
 using DziennikUcznia.Enum;
 using DziennikUcznia.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.CodeAnalysis.Scripting;
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using System.Reflection;
+using System.Security.Claims;
 
 namespace DziennikUcznia.Controllers
 {
@@ -19,7 +18,7 @@ namespace DziennikUcznia.Controllers
             _context = context;
         }
 
-        [HttpGet]
+        //GET
         public IActionResult Register()
         {
             var roleList = GetRoleList();
@@ -28,31 +27,25 @@ namespace DziennikUcznia.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(User model)
+        public IActionResult Register(User model)
         {
+
+            // Sprawdź, czy użytkownik o podanym loginie już istnieje
+            if (_context.Users.Any(u => u.Login == model.Login))
+            {
+                ModelState.AddModelError("Username", "Użytkownik o takim loginie już istnieje");
+                return View(model);
+            }
+
             if (ModelState.IsValid)
             {
-                // Sprawdź, czy użytkownik o podanym loginie już istnieje
-                if (_context.Users.Any(u => u.Login == model.Login))
-                {
-                    ModelState.AddModelError("Username", "Użytkownik o takim loginie już istnieje");
-                    return View(model);
-                }
+                // Haszuj hasło przed zapisaniem do bazy danych
+                model.Password = PasswordHasher.HashPassword(model.Password);
 
-
-                // Dodaj nowego użytkownika do bazy danych
-                var newUser = new User
-                {
-                    Name = model.Name,
-                    Password = HashPassword(model.Password), // Funkcja do haszowania hasła
-                    Email = model.Email,
-                    Roles = model.Roles  // Przykładowa rola, możesz dostosować do swoich potrzeb
-                };
-
-                _context.Users.Add(newUser);
-                await _context.SaveChangesAsync();
-
-                 return RedirectToAction("Login", "Account");
+                _context.Users.Add(model);
+                _context.SaveChanges();
+                TempData["success"] = "User created successfully";
+                return RedirectToAction("Login", "Account");
             }
             var roleList = GetRoleList();
             ViewBag.Roles = roleList;
@@ -60,26 +53,43 @@ namespace DziennikUcznia.Controllers
         }
 
 
-        [HttpGet]
+
+        //Logowanie
         public IActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Login(User model)
+        public async Task<IActionResult> Login(User model)
         {
             if (ModelState.IsValid)
             {
-                // Sprawdź, czy istnieje użytkownik o podanym loginie
                 var user = _context.Users.FirstOrDefault(u => u.Login == model.Login);
 
-                if (user != null && VerifyPassword(model.Password, user.Password))
+                if (user != null && PasswordHasher.VerifyPassword(model.Password, user.Password))
                 {
-                    // Zaloguj użytkownika
-                    // Możesz użyć ASP.NET Core Identity do zarządzania sesją
-                    // Przykład użycia: SignInManager<User>.PasswordSignInAsync(user, model.Password, isPersistent: false, lockoutOnFailure: false);
+                    // Utwórz uwierzytelnienie dla użytkownika
+                    var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, user.Login),
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+                };
 
+                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                    var authProperties = new AuthenticationProperties
+                    {
+                        // Dodaj właściwości uwierzytelniania, jeśli są potrzebne
+                    };
+
+                    await HttpContext.SignInAsync(
+                        CookieAuthenticationDefaults.AuthenticationScheme,
+                        new ClaimsPrincipal(claimsIdentity),
+                        authProperties);
+
+                    HttpContext.Session.SetString("IsLoggedIn", "true");// Ustawienie ze zalogowany
+                    TempData["success"] = "Zalogowano pomyślnie";
                     return RedirectToAction("Index", "Home");
                 }
 
@@ -89,32 +99,27 @@ namespace DziennikUcznia.Controllers
             return View(model);
         }
 
-
-        // Funkcja do haszowania hasła
-        private string HashPassword(string password)
+        //sprawdzamy czy zalogowany
+        protected bool IsUserLoggedIn()
         {
-            // Generuj sol (randomowy ciąg znaków) - jest przechowywany razem z hasłem
-            string salt = BCrypt.Net.BCrypt.GenerateSalt(12);
-
-            // Haszuj hasło przy użyciu soli
-            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password, salt);
-
-            return hashedPassword;
+            return HttpContext.Session.GetString("IsLoggedIn") == "true";
         }
 
-        // Funkcja do weryfikacji hasła
-        private bool VerifyPassword(string enteredPassword, string storedHash)
+        [HttpGet]
+        public async Task<IActionResult> Logout()
         {
-            // Weryfikuj hasło przy użyciu hasha przechowywanego w bazie danych
-            return BCrypt.Net.BCrypt.Verify(enteredPassword, storedHash);
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            TempData["success"] = "Wylogowano pomyślnie";
+            return RedirectToAction("Index", "Home");
         }
+
 
 
         private List<SelectListItem> GetRoleList()
         {
             var roles = Enum.Roles.GetValues(typeof(Roles))
                             .Cast<Roles>()
-                            .Where(r => r!= Roles.Admin)  // Pomijamy Admina
+                            .Where(r => r != Roles.Admin)  // Pomijamy Admina
                             .Select(r => new SelectListItem
                             {
                                 Text = r.ToString(),
@@ -124,6 +129,118 @@ namespace DziennikUcznia.Controllers
 
             return roles;
         }
+
+        //Wyswietlanie inforamcji o uzytkowniku
+        [HttpGet]
+        public IActionResult Profile()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Profile(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(user);
+        }
+
+
+        //Edycja inforamcji uzytkownika
+        [HttpGet]
+        public async Task<IActionResult> EditProfile(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var roleList = GetRoleList();
+            ViewBag.Roles = roleList;
+
+            return View(user);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditProfile(int id, User user, IFormFile profilePicture)
+        {
+            var roleList = GetRoleList();
+            ViewBag.Roles = roleList;
+
+            return View(user);
+        }
+
+        //Usuwanie uzytkownika
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var userFromDb = _context.Users.Find(id);
+
+            if (userFromDb == null)
+            {
+                return NotFound();
+            }
+
+            return View(userFromDb);
+        }
+
+        //POST
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeletePOST(int? id)
+        {
+            var obj = _context.Users.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            _context.Users.Remove(obj);
+            _context.SaveChanges();
+            TempData["success"] = "User deleted successfully";
+            return RedirectToAction("Index");
+
+        }
+
+        //Ciasteczka
+        [HttpPost]
+        public IActionResult ChangeTheme(string theme)
+        {
+            // Tutaj zapisz preferencje motywu w ciasteczku
+            SetThemeCookie(theme);
+
+            // Możesz przekierować użytkownika z powrotem na tę samą stronę lub gdziekolwiek indziej
+            return RedirectToAction("Index", "Home");
+        }
+
+        private void SetThemeCookie(string theme)
+        {
+            Response.Cookies.Append("theme", theme, new CookieOptions
+            {
+                Expires = DateTime.Now.AddDays(30) // Dostosuj do swoich potrzeb
+            });
+        }
+
 
     }
 }

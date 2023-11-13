@@ -1,6 +1,6 @@
 ﻿namespace DziennikUcznia.Models
 {
-    public class Student:User
+    public class Student : User
     {
 
 

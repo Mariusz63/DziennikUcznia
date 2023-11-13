@@ -1,0 +1,25 @@
+﻿@model DziennikUcznia.Models.User
+
+<h2>Profil użytkownika</h2>
+<body asp-action="Profile" method="post">
+    @if (Model != null)
+    {
+        <p><strong>Login:</strong> @Model.Login</p>
+        <p><strong>Imię:</strong> @Model.Name</p>
+        <p><strong>Nazwisko:</strong> @Model.LastName</p>
+        <p><strong>Data urodzenia:</strong> @(Model.BirthDate?.ToShortDateString())</p>
+        <p><strong>Email:</strong> @Model.Email</p>
+        <p><strong>Rola:</strong> @Model.Roles</p>
+        <!-- Dodaj inne informacje o użytkowniku -->
+
+        <a asp-action="EditProfile" asp-route-id="@Model.Id" class="btn btn-primary">Edytuj profil</a>
+    }
+    else
+    {
+        <p>Brak danych użytkownika.</p>
+        <h4>Zarejestruj się!</h4>
+        <a asp-area="" asp-controller="Account" asp-action="Register" type="submit" class="btn btn-primary">Rejestracja</a>
+
+    }
+</body>
+

@@ -6,7 +6,7 @@ namespace DziennikUcznia.Models
     {
         [Range(1, 6, ErrorMessage = "Wybierz ocene w przedziale od 1 do 6.")]
         public int Value { get; set; }
-        public string Description { get; set; } 
+        public string Description { get; set; }
 
     }
 }
