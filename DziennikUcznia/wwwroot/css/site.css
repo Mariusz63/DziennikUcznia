@@ -1,9 +1,9 @@
-html {
+*{
   font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
+  *{
     font-size: 16px;
   }
 }
@@ -12,11 +12,23 @@ html {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
-}
 
 body {
-  margin-bottom: 60px;
+    height: 100vh;
+    overflow-x: hidden;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1rem;
+    width: 100vw;
+}
+
+.container{
+    
 }

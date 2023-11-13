@@ -1,3 +1,7 @@
+using BulkyBookWeb.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
+
 namespace DziennikUcznia
 {
     public class Program
@@ -8,6 +12,10 @@ namespace DziennikUcznia
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
+            builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
+                builder.Configuration.GetConnectionString("DefaultConnection")
+                ));
 
             var app = builder.Build();
 
@@ -18,6 +26,13 @@ namespace DziennikUcznia
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+       //builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+       //.AddCookie(options =>
+       //{
+       //    options.LoginPath = "/Login/Index";
+       //    options.AccessDeniedPath = "/Home/AccessDenied";
+       //});
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
