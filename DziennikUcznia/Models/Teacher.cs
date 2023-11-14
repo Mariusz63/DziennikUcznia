@@ -1,6 +1,8 @@
-﻿namespace DziennikUcznia.Models
+﻿using DziennikUcznia.Areas.Identity.Data;
+
+namespace DziennikUcznia.Models
 {
-    public class Teacher : User
+    public class Teacher : ApplicationUser
     {
         public List<Class> ClassList { get; set; }
     }
