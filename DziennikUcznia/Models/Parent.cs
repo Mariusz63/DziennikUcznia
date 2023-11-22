@@ -1,8 +1,12 @@
-﻿namespace DziennikUcznia.Models
+﻿using System.Collections.Generic;
+
+namespace DziennikUcznia.Models
 {
-    public class Parent
+    public class Parent : ApplicationUser
     {
         public int ParentId { get; set; }
-        //list<uczen>
+        // inne dane osobowe rodzica
+
+        public virtual ICollection<Student> Children { get; set; }
     }
 }

@@ -6,15 +6,15 @@ namespace DziennikUcznia.Models
     public class Class : Student
     {
         [Key]
-        public int? KlasaId { get; set; }
-
+        public int ClassId { get; set; }
         [Required]
-        public string Name { get; set; }
+        public string ClassName { get; set; }
+        // inne informacje o klasie
 
-        //Wychowawca
+        public virtual ICollection<Student> Students { get; set; }
 
-        public List<Student> Students;
-        public List<Subject> Subjects;
+        public virtual Teacher HomeroomTeacher { get; set; } //wychowawca
 
+        public virtual ICollection<Subject> Subjects { get; set; }
     }
 }

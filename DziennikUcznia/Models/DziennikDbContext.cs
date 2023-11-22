@@ -16,16 +16,22 @@ namespace DziennikUcznia.Models
             // Add your customizations after calling base.OnModelCreating(builder);
         }
 
+
+        //users
         public DbSet<ApplicationUser> Users { get; set; }
         public DbSet<Class> Classes { get; set; }
-        public DbSet<Grade> Grades { get; set; }
         public DbSet<Parent> Parents { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Subject> Subjects { get; set; }
-        public DbSet<Test> Tests { get; set; }
+        //Chat
         public DbSet<Group> Groups { get; set; }
         public DbSet<Message> Messages { get; set; }
+        //Test
+        public DbSet<Test> Tests { get; set; }
+        public DbSet<Grade> Grades { get; set; }
+        public DbSet<TestAnswer> TestAnswer { get; set; }
+        public DbSet<TestQuestion> TestQuestions { get; set; }
 
     }
 }

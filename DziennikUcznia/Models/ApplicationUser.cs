@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 
 // Add profile data for application users by adding properties to the ApplicationUser class
-public class ApplicationUser
+public class ApplicationUser:IdentityUser
 {
 
     [Key, Column(Order = 1)]
@@ -28,6 +31,7 @@ public class ApplicationUser
     [DataType(DataType.Date)]
     public DateTime? BirthDate { get; set; }
 
+    [Required]
     [EmailAddress]
     [Display(Name = "Email")]
     [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}")]
