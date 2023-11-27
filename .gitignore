@@ -262,8 +262,6 @@ ServiceFabricBackup/
 *.rptproj.bak
 
 # SQL Server files
-*.mdf
-*.ldf
 *.ndf
 
 # Business Intelligence projects
@@ -396,3 +394,5 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/DziennikUczniaV3/App_Data/DbNowa.mdf
+/DziennikUczniaV3/App_Data/DbNowa_log.ldf
