@@ -19,3 +19,6 @@ namespace DziennikUcznia
         }
     }
 }
+
+// licznik odwiedzn aplikacji 
+//dokumentacja global.asax

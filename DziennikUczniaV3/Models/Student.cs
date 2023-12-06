@@ -9,6 +9,7 @@ namespace DziennikUczniaV3.Models
         public int StudentId { get; set; }
 
         public int ClassId { get; set; }
+
         public virtual Class Class { get; set; }
 
         // Relacja jeden do jeden z modelem ApplicationUser
