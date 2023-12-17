@@ -1,0 +1,61 @@
+﻿@model IEnumerable<DziennikUczniaKoniec.Controllers.AccountController.RoleUsers>
+@{
+    var D = DziennikUczniaKoniec.Service.LocalizedStrings.Account.Index[ViewBag.LanguageId];
+    ViewBag.Title = D["Accounts"];
+}
+
+<h2>@ViewBag.Title</h2>
+
+@Html.ActionLink(D["Create"], "Create")
+
+@foreach (var roleUsers in Model)
+{
+    <h4>@D[roleUsers.RoleName]</h4>
+    if (roleUsers.Users.Count == 0)
+    {
+        @D["No accounts"]
+        <br />
+    }
+    else
+    {
+    <table class="table">
+        <tr>
+            <th>
+                @D["Name"]
+            </th>
+            <th>
+                @D["Surname"]
+            </th>
+            <th>
+                @D["Email"]
+            </th>
+            <th>
+                @D["Phone number"]
+            </th>
+            <th></th>
+        </tr>
+        @foreach (var item in roleUsers.Users)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Surname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+                <td>
+                    @Html.ActionLink(D["Edit"], "Edit", new { id = item.Id }) |
+                    @Html.ActionLink(D["Reset password"], "AdminResetPassword", new { id = item.Id })
+                    @*@Html.ActionLink("Delete", "Delete", new { id=item.User.Id })*@
+                </td>
+            </tr>
+        }
+    </table>
+    }
+}

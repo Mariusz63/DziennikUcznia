@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Antlr.Runtime;
+using System.Collections.Generic;
 
 namespace DziennikUcznia.Models
 {
@@ -16,5 +17,6 @@ namespace DziennikUcznia.Models
 
         public virtual Parent ParentId { get; set; }
 
+        public ICollection<Grade> Grades { get;}
     }
 }

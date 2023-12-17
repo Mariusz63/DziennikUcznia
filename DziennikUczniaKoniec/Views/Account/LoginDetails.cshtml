@@ -1,0 +1,37 @@
+﻿@{
+    var D = DziennikUczniaKoniec.Service.LocalizedStrings.Account.LoginDetails[ViewBag.LanguageId];
+    ViewBag.Title = D["Login details"];
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @D["User name"]
+        </dt>
+        <dd>
+            <p id="userName">@ViewBag.UserName</p>
+            <button onclick="copyToClipboard('#userName')">@D["Copy username"]</button>
+        </dd>
+        <dt>
+            @D["Generated password"]
+        </dt>
+        <dd>
+            <p id="password">@ViewBag.Password</p>
+            <button onclick="copyToClipboard('#password')">@D["Copy password"]</button>
+        </dd>
+    </dl>
+</div>
+
+@Html.ActionLink(D["Back"], "Index")
+
+<script>
+    function copyToClipboard(element) {
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val($(element).text()).select();
+        document.execCommand("copy");
+        $temp.remove();
+    }
+</script>

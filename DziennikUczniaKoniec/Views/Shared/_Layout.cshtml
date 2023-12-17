@@ -1,0 +1,57 @@
+﻿@{ 
+    var D = DziennikUczniaKoniec.Service.LocalizedStrings.Layout._Layout[ViewBag.LanguageId];
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    @{
+                        var links = DziennikUczniaKoniec.Service.Role.GetLinks(User);
+                        foreach (var l in links)
+                        {
+                            @Html.ActionLink(D[l.Name], l.Action, l.Controller, l.RouteValues, new { @class = "nav-link" });
+                        }
+                    }
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - DziennikUczniaKoniec</p>
+            @D["Select language:"]
+            @Html.ActionLink("EN", "SelectEnglish", "Language") |
+            @Html.ActionLink("PL", "SelectPolish", "Language")
+    </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script>
+            // tutaj pisać skrypty do layouta
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
