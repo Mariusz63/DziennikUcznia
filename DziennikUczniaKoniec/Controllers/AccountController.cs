@@ -1,26 +1,21 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
+﻿using DziennikUczniaKoniec.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using DziennikUczniaKoniec.Models;
 using System.Collections.Generic;
-using System.Web.UI.WebControls.WebParts;
-using DziennikUczniaKoniec.Service;
-using DziennikUczniaKoniec.Models.ViewModels;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
 
 namespace DziennikUczniaKoniec.Controllers
 {
-    [Authorize, ViewFilter]
+    [Authorize]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+
         private ApplicationDbContext Db = ApplicationDbContext.Create();
 
         public AccountController()
@@ -57,212 +52,6 @@ namespace DziennikUczniaKoniec.Controllers
             }
         }
 
-        [AllowAnonymous]
-        public async Task<ActionResult> CreateRolesAndAccounts(string password)
-        {
-            if (password != "caviaporcellus")
-                return RedirectToAction("Index", "Home");
-            IdentityManager im = new IdentityManager();
-            im.CreateRole(Role.Administrator);
-            im.CreateRole(Role.Teacher);
-            im.CreateRole(Role.Parent);
-            im.CreateRole(Role.Student);
-
-            string administatorEmail = "a.adminowski@szkola.pl", teacherEmail = "j.kowalski@szkola.pl";
-            ApplicationUser administrator, teacher;
-
-            administrator = new ApplicationUser { Name = "Admin", Surname = "Adminowski", UserName = administatorEmail, Email = administatorEmail, PhoneNumber = "000000001" };
-            var result = await UserManager.CreateAsync(administrator, "administrator123");
-            if (result.Succeeded)
-                Db.Administrator.Add(new Administrator { Id = administrator.Id });
-            teacher = new ApplicationUser { Name = "Jan", Surname = "Kowalski", UserName = teacherEmail, Email = teacherEmail, PhoneNumber = "123456789" };
-            result = await UserManager.CreateAsync(teacher, "teacher123");
-            if (result.Succeeded)
-                Db.Teacher.Add(new Teacher { Id = teacher.Id });
-            Db.SaveChanges();
-
-            im.AddUserToRoleByUsername(administatorEmail, Role.Administrator);
-            im.AddUserToRoleByUsername(teacherEmail, Role.Teacher);
-            return RedirectToAction("Index", "Home");
-        }
-
-        public struct RoleUsers
-        {
-            public string RoleName;
-            public List<ApplicationUser> Users;
-            public RoleUsers(string roleName)
-            {
-                RoleName = roleName;
-                Users = new List<ApplicationUser>();
-            }
-        }
-
-        // GET: Account/Index
-        [Authorize(Roles = Role.Administrator)]
-        public ActionResult Index()
-        {
-            var roles = Db.Roles.ToArray();
-            var users = Db.Users.ToArray();
-            var roleUsers = new RoleUsers[roles.Length];
-            int i = 0;
-            foreach (var role in roles)
-            {
-                roleUsers[i] = new RoleUsers(role.Name);
-                var roleUserIds = role.Users.Select(e => e.UserId);
-                foreach (var userId in roleUserIds)
-                {
-                    var user = users.Where(e => e.Id == userId).Single();
-                    roleUsers[i].Users.Add(user);
-                }
-                ++i;
-            }
-            for (i = 0; i < roleUsers.Length; ++i)
-            {
-                var ru = roleUsers[i];
-                var orderedUsers = ru.Users.OrderBy(e => e.Surname);
-                roleUsers[i].Users = orderedUsers.ToList();
-            }
-            return View(roleUsers);
-        }
-
-        // GET: Account/Details/5
-        [Authorize(Roles = Role.Administrator)]
-        public ActionResult Details(string id)
-        {
-            return View();
-        }
-
-        // GET
-       // [Authorize(Roles = Role.Administrator)]
-        public ActionResult Create()
-        {
-            return RedirectToAction("Register");
-        }
-
-        // GET
-        [Authorize(Roles = Role.Administrator)]
-        public ActionResult AdminResetPassword(string id)
-        {
-            var newPassword = System.Web.Security.Membership.GeneratePassword(10, 4);
-            var token = UserManager.GeneratePasswordResetToken(id);
-            UserManager.ResetPasswordAsync(id, token, newPassword);
-            var userName = Db.Users.Where(e => e.Id == id).Single().UserName;
-            return RedirectToAction("LoginDetails", new { userName = userName, password = newPassword });
-        }
-
-        // GET: Account/Edit/5
-        [Authorize(Roles = Role.Administrator)]
-        public ActionResult Edit(string id)
-        {
-            var roleId = Db.Users.Where(e => e.Id == id).Single().Roles.Single().RoleId;
-            var roleName = Db.Roles.Where(e => e.Id == roleId).Single().Name;
-            switch (roleName)
-            {
-                case Role.Student:
-                    return RedirectToAction("EditStudent", new { id = id });
-                default:
-                    return RedirectToAction("EditOther", new { id = id });
-            }
-        }
-
-        private LinkedList<SelectListItem> GetParents()
-        {
-            var records = Db.Parent.Select(r => new { r.Id, r.ApplicationUser.Name, r.ApplicationUser.Surname, r.ApplicationUser.Email });
-            var list = new LinkedList<SelectListItem>();
-            list.AddLast(new SelectListItem { Text = "null", Value = "null", Selected = false });
-            foreach (var r in records)
-                list.AddLast(new SelectListItem { Text = $"{r.Name} {r.Surname} | {r.Email}", Value = r.Id, Selected = false });
-            return list;
-        }
-
-        private void CreateViewBagParents(string parentId)
-        {
-            var parents = GetParents();
-            ViewBag.Parents = parents;
-            if (parents.First == null)
-                return;
-            if (parentId == null)
-                parents.First.Value.Selected = true;
-            else
-                foreach (var p in parents)
-                    if (p.Value == parentId)
-                    {
-                        p.Selected = true;
-                        break;
-                    }
-        }
-
-        [Authorize(Roles = Role.Administrator)]
-        public ActionResult EditStudent(string id)
-        {
-            var s = Db.Student.Where(e => e.Id == id).Single();
-            var svm = new StudentViewModel(s.Id, s.ApplicationUser.Name, s.ApplicationUser.Surname, s.ApplicationUser.Email, s.ApplicationUser.PhoneNumber, s.ParentId);
-            CreateViewBagParents(s.ParentId);
-            return View(svm);
-        }
-
-        [HttpPost]
-        [Authorize(Roles = Role.Administrator)]
-        public ActionResult EditStudent(StudentViewModel student)
-        {
-            if (ModelState.IsValid == false)
-            {
-                CreateViewBagParents(student.ParentId);
-                return View(student);
-            }
-            var record = Db.Student.Where(e => e.Id == student.Id).Single();
-            record.ApplicationUser.Name = student.Name;
-            record.ApplicationUser.Surname = student.Surname;
-            record.ApplicationUser.Email = student.Email;
-            record.ApplicationUser.UserName = student.Email;
-            record.ApplicationUser.PhoneNumber = student.PhoneNumber;
-            record.ParentId = student.ParentId == "null" ? null : student.ParentId;
-            Db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        [Authorize(Roles = Role.Administrator)]
-        public ActionResult EditOther(string id)
-        {
-            var u = Db.Users.Where(e => e.Id == id).Single();
-            var ovm = new OtherViewModel(u.Id, u.Name, u.Surname, u.Email, u.PhoneNumber);
-            return View(ovm);
-        }
-
-        [HttpPost]
-        [Authorize(Roles = Role.Administrator)]
-        public ActionResult EditOther(OtherViewModel user)
-        {
-            if (ModelState.IsValid == false)
-                return View(user);
-            var emails = Db.Users.Where(e => e.Id != user.Id).Select(e => e.Email).ToArray();
-            if (emails.Contains(user.Email))
-                return View(user);
-            var record = Db.Users.Where(e => e.Id == user.Id).Single();
-            record.Name = user.Name;
-            record.Surname = user.Surname;
-            record.Email = user.Email;
-            record.UserName = user.Email;
-            record.PhoneNumber = user.PhoneNumber;
-            Db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        /* // GET: Account/Delete/5
-        [Authorize(Roles = Role.Administrator)]
-        public ActionResult Delete(string id)
-        {
-            return View();
-        }
-
-        // POST: Account/Delete/5
-        [HttpPost]
-        [Authorize(Roles = Role.Administrator)]
-        public ActionResult Delete(string id, FormCollection collection)
-        {
-            return View();
-        } */
-
         //
         // GET: /Account/Login
         [AllowAnonymous]
@@ -280,7 +69,9 @@ namespace DziennikUczniaKoniec.Controllers
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid)
+            {
                 return View(model);
+            }
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
@@ -343,26 +134,21 @@ namespace DziennikUczniaKoniec.Controllers
             }
         }
 
-        private LinkedList<SelectListItem> GetRoles()
-        {
-            var records = Db.Roles.Select(r => new { r.Name });
-            var list = new LinkedList<SelectListItem>();
-            foreach (var r in records)
-                list.AddLast(new SelectListItem { Text = r.Name, Value = r.Name, Selected = false });
-            return list;
-        }
-
+        //
         // GET: /Account/Register
         [AllowAnonymous]
-        public ActionResult Register()
-        {
-            var roles = GetRoles();
-            if (roles.First != null)
-                roles.First.Value.Selected = true;
-            ViewBag.Roles = roles;
-            return View();
-        }
+      public ActionResult Register()
+{
+    var model = new RegisterViewModel
+    {
+        // Inne ustawienia modelu...
+        AvailableRoles = GetRolesSelectList()
+    };
 
+    return View(model);
+}
+
+        //
         // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
@@ -371,60 +157,45 @@ namespace DziennikUczniaKoniec.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { Name = model.Name, Surname = model.Surname, UserName = model.Email, Email = model.Email, PhoneNumber = model.PhoneNumber };
-                string password = System.Web.Security.Membership.GeneratePassword(10, 4);
-                var result = await UserManager.CreateAsync(user, password);
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    SecondName = model.SecondName,
+                    UserRole = model.SelectedRole,
+                    PhoneNumber = model.PhoneNumber
+                };
+
+                var result = await UserManager.CreateAsync(user, model.Password);
+
                 if (result.Succeeded)
                 {
-                    var im = new IdentityManager();
-                    im.AddUserToRole(user.Id, model.RoleName);
-                    switch (model.RoleName)
-                    {
-                        case Role.Administrator:
-                            Db.Administrator.Add(new Administrator { Id = user.Id });
-                            break;
-                        case Role.Teacher:
-                            Db.Teacher.Add(new Teacher { Id = user.Id });
-                            break;
-                        case Role.Parent:
-                            Db.Parent.Add(new Parent { Id = user.Id });
-                            break;
-                        case Role.Student:
-                            Db.Student.Add(new Student { Id = user.Id });
-                            break;
-                    }
-                    Db.SaveChanges();
+                    // Assign user to the selected role
+                    await UserManager.AddToRoleAsync(user.Id, model.SelectedRole);
 
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    // Continue with your registration logic...
+                    // This might include sign-in, sending confirmation email, etc.
 
-                    return RedirectToAction("LoginDetails", new { userName = user.UserName, password = password });
+                    return RedirectToAction("Index", "Home");
                 }
+
                 AddErrors(result);
             }
 
-            var roles = GetRoles();
-            foreach (var r in roles)
-                if (r.Value == model.RoleName)
-                {
-                    r.Selected = true;
-                    break;
-                }
-            ViewBag.Roles = roles;
-            // If we got this far, something failed, redisplay form
+            // If we got this far, something failed, redisplay the form
+            model.AvailableRoles = GetRolesSelectList();
             return View(model);
         }
 
-        // GET
-        [Authorize(Roles = Role.Administrator)]
-        public ActionResult LoginDetails(string userName, string password)
+        private IEnumerable<SelectListItem> GetRolesSelectList()
         {
-            ViewBag.UserName = userName;
-            ViewBag.Password = password;
-            return View();
+            return new List<SelectListItem>
+    {
+        new SelectListItem { Value = Role.Admin, Text = "Admin" },
+        new SelectListItem { Value = Role.Student, Text = "Student" },
+        new SelectListItem { Value = Role.Teacher, Text = "Teacher" }
+    };
         }
 
         //
@@ -458,18 +229,18 @@ namespace DziennikUczniaKoniec.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null) // || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
                     return View("ForgotPasswordConfirmation");
                 }
-                // Send an email with this link
-                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id); // code - token; identyfikator sesji resetowania hasła
-                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
 
-                var D = LocalizedStrings.Account.ForgotPassword[LanguageCookie.Read(Request.Cookies)];
-                EmailSender.Send("noreply@DziennikUczniaKoniec.com", user, D["Reset password"], D["Please reset your password by clicking <a href=\""] + callbackUrl + D["\">here</a>"], null, true);
-                return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+                // Send an email with this link
+                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
+                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // If we got this far, something failed, redisplay form
@@ -487,9 +258,8 @@ namespace DziennikUczniaKoniec.Controllers
         //
         // GET: /Account/ResetPassword
         [AllowAnonymous]
-        public ActionResult ResetPassword(string userId, string code)
+        public ActionResult ResetPassword(string code)
         {
-            ViewBag.UserId = userId;
             return code == null ? View("Error") : View();
         }
 
@@ -498,17 +268,23 @@ namespace DziennikUczniaKoniec.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ResetPassword(string userId, ResetPasswordViewModel model)
+        public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
         {
             if (!ModelState.IsValid)
+            {
                 return View(model);
-            var user = await UserManager.FindByIdAsync(userId);
+            }
+            var user = await UserManager.FindByNameAsync(model.Email);
             if (user == null)
+            {
                 // Don't reveal that the user does not exist
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
+            }
             var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
             if (result.Succeeded)
+            {
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
+            }
             AddErrors(result);
             return View();
         }

@@ -1,9 +1,4 @@
-﻿using DziennikUczniaKoniec.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace DziennikUczniaKoniec.Controllers
 {
@@ -11,8 +6,7 @@ namespace DziennikUczniaKoniec.Controllers
     {
         public ActionResult Index()
         {
-            ApplicationDbContext.Create().Database.CreateIfNotExists();
-            return RedirectToAction("Index", "GlobalAnnouncement");
+            return View();
         }
 
         public ActionResult About()

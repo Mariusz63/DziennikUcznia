@@ -1,4 +1,7 @@
-﻿using Microsoft.Owin;
+﻿using DziennikUczniaKoniec.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity;
+using Microsoft.Owin;
 using Owin;
 
 [assembly: OwinStartupAttribute(typeof(DziennikUczniaKoniec.Startup))]

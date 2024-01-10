@@ -1,7 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
-  <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,7 +7,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{45FABC43-6EE0-4B18-A483-C63DDC3F94CB}</ProjectGuid>
+    <ProjectGuid>{7494204C-6E61-4551-B0FB-BEFA51C7F7BC}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -19,7 +17,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44312</IISExpressSSLPort>
+    <IISExpressSSLPort>44301</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -46,75 +44,77 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
-      <HintPath>packages\BouncyCastle.Cryptography.2.2.1\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Protobuf, Version=3.21.9.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
-      <HintPath>packages\Google.Protobuf.3.21.9\lib\net45\Google.Protobuf.dll</HintPath>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="K4os.Compression.LZ4, Version=1.3.5.0, Culture=neutral, PublicKeyToken=2186fa9121ef231d, processorArchitecture=MSIL">
-      <HintPath>packages\K4os.Compression.LZ4.1.3.5\lib\net462\K4os.Compression.LZ4.dll</HintPath>
+    <Reference Include="Microsoft.AspNetCore.Html.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNetCore.Html.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Html.Abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="K4os.Compression.LZ4.Streams, Version=1.3.5.0, Culture=neutral, PublicKeyToken=2186fa9121ef231d, processorArchitecture=MSIL">
-      <HintPath>packages\K4os.Compression.LZ4.Streams.1.3.5\lib\net462\K4os.Compression.LZ4.Streams.dll</HintPath>
+    <Reference Include="Microsoft.AspNetCore.Razor, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNetCore.Razor.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="K4os.Hash.xxHash, Version=1.0.8.0, Culture=neutral, PublicKeyToken=32cd54395057cec3, processorArchitecture=MSIL">
-      <HintPath>packages\K4os.Hash.xxHash.1.0.8\lib\net462\K4os.Hash.xxHash.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.Bcl.AsyncInterfaces.5.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\lib\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.Extensions.Logging.Abstractions.2.1.1\lib\netstandard2.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    <Reference Include="Microsoft.PowerBI.Api, Version=4.18.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.PowerBI.Api.4.18.0\lib\net48\Microsoft.PowerBI.Api.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data, Version=8.2.0.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <HintPath>packages\MySql.Data.8.2.0\lib\net48\MySql.Data.dll</HintPath>
+    <Reference Include="Microsoft.Rest.ClientRuntime, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Rest.ClientRuntime.2.3.24\lib\net461\Microsoft.Rest.ClientRuntime.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data.EntityFramework, Version=8.2.0.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <HintPath>packages\MySql.Data.EntityFramework.8.2.0\lib\net462\MySql.Data.EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="Quartz, Version=3.8.0.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
-      <HintPath>packages\Quartz.3.8.0\lib\net472\Quartz.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
-    <Reference Include="System.Configuration.ConfigurationManager, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>packages\System.Configuration.ConfigurationManager.4.4.1\lib\net461\System.Configuration.ConfigurationManager.dll</HintPath>
-    </Reference>
     <Reference Include="System.Data" />
-    <Reference Include="System.Diagnostics.DiagnosticSource, Version=7.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>packages\System.Diagnostics.DiagnosticSource.7.0.2\lib\net462\System.Diagnostics.DiagnosticSource.dll</HintPath>
-    </Reference>
     <Reference Include="System.Drawing" />
-    <Reference Include="System.IO.Pipelines, Version=5.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>packages\System.IO.Pipelines.5.0.2\lib\net461\System.IO.Pipelines.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Management" />
     <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
     </Reference>
+    <Reference Include="System.Net" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
-    <Reference Include="System.Runtime.Remoting" />
-    <Reference Include="System.Security" />
-    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Text.Encodings.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Text.Encodings.Web.8.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
     </Reference>
-    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.3.0\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.Mvc.5.3.0\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.Razor.3.3.0\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.3.0\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.3.0\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.3.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -132,35 +132,8 @@
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
-    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.Helpers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Mvc, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>packages\Microsoft.AspNet.Mvc.5.2.9\lib\net45\System.Web.Mvc.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.Optimization">
       <HintPath>packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>packages\Microsoft.AspNet.Razor.3.2.9\lib\net45\System.Web.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
@@ -170,17 +143,8 @@
       <Private>True</Private>
       <HintPath>packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="ZstdSharp, Version=0.7.1.0, Culture=neutral, PublicKeyToken=8d151af33a4ad5cf, processorArchitecture=MSIL">
-      <HintPath>packages\ZstdSharp.Port.0.7.1\lib\net461\ZstdSharp.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
-      <HintPath>packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core">
       <HintPath>packages\Microsoft.AspNet.Identity.Core.2.2.4\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
@@ -220,9 +184,6 @@
     <Reference Include="Microsoft.Owin.Security.OAuth">
       <HintPath>packages\Microsoft.Owin.Security.OAuth.4.2.2\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
-      <HintPath>packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -230,76 +191,68 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Controllers\AbsenceController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\ChildController.cs" />
-    <Compile Include="Controllers\ClassController.cs" />
-    <Compile Include="Controllers\DoQuizController.cs" />
-    <Compile Include="Controllers\GlobalAnnouncementController.cs" />
-    <Compile Include="Controllers\GradeController.cs" />
+    <Compile Include="Controllers\AnnouncementController.cs" />
+    <Compile Include="Controllers\ClassesController.cs" />
+    <Compile Include="Controllers\GradesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\LanguageController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\MessageController.cs" />
-    <Compile Include="Controllers\QuizController.cs" />
-    <Compile Include="Controllers\StudentController.cs" />
-    <Compile Include="Controllers\SubjectController.cs" />
+    <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\SubjectsController.cs" />
+    <Compile Include="Controllers\TestsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202312172111519_InitialCreate.cs" />
-    <Compile Include="Migrations\202312172111519_InitialCreate.designer.cs">
-      <DependentUpon>202312172111519_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\202401101644153_init.cs" />
+    <Compile Include="Migrations\202401101644153_init.designer.cs">
+      <DependentUpon>202401101644153_init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202401101826222_AddRole.cs" />
+    <Compile Include="Migrations\202401101826222_AddRole.designer.cs">
+      <DependentUpon>202401101826222_AddRole.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202401101858060_AddRole1.cs" />
+    <Compile Include="Migrations\202401101858060_AddRole1.designer.cs">
+      <DependentUpon>202401101858060_AddRole1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Absence.cs" />
-    <Compile Include="Models\AbstractQuestion.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Administrator.cs" />
     <Compile Include="Models\Attachment.cs" />
-    <Compile Include="Models\Class.cs" />
+    <Compile Include="Models\Classes.cs" />
+    <Compile Include="Models\ClassMembership.cs" />
     <Compile Include="Models\ClosedQuestion.cs" />
     <Compile Include="Models\ClosedQuestionAnswer.cs" />
     <Compile Include="Models\ClosedQuestionOption.cs" />
-    <Compile Include="Models\File.cs" />
-    <Compile Include="Models\GlobalAnnouncement.cs" />
+    <Compile Include="Models\FileType.cs" />
+    <Compile Include="Models\Announcement.cs" />
     <Compile Include="Models\Grade.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\MessageRecipient.cs" />
     <Compile Include="Models\OpenQuestion.cs" />
-    <Compile Include="Models\OpenQuestionAnswer.cs" />
+    <Compile Include="Models\OpenTestAnswer.cs" />
     <Compile Include="Models\Parent.cs" />
-    <Compile Include="Models\Quiz.cs" />
-    <Compile Include="Models\QuizAttempt.cs" />
-    <Compile Include="Models\QuizSharing.cs" />
-    <Compile Include="Models\SecondForeignLanguageGroup.cs" />
+    <Compile Include="Models\Question.cs" />
+    <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Student.cs" />
+    <Compile Include="Models\StudentPrent.cs" />
     <Compile Include="Models\Subject.cs" />
     <Compile Include="Models\Teacher.cs" />
     <Compile Include="Models\TeacherClassSubject.cs" />
-    <Compile Include="Models\ViewModels\Account.cs" />
-    <Compile Include="Models\ViewModels\OtherViewModel.cs" />
-    <Compile Include="Models\ViewModels\StudentViewModel.cs" />
+    <Compile Include="Models\TeacherSubjectAssignment.cs" />
+    <Compile Include="Models\Test.cs" />
+    <Compile Include="Models\TestAttempt.cs" />
+    <Compile Include="Models\TestSharing.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service\ComparerById.cs" />
-    <Compile Include="Service\ComparerBySubject.cs" />
-    <Compile Include="Service\EmailSender.cs" />
-    <Compile Include="Service\EmailSenderSecret.cs" />
-    <Compile Include="Service\FileType.cs" />
-    <Compile Include="Service\LanguageCookie.cs" />
-    <Compile Include="Service\LocalizedStrings.cs" />
-    <Compile Include="Service\PeriodicGradeSheet\GradeEmailJob.cs" />
-    <Compile Include="Service\PeriodicGradeSheet\JobScheduler.cs" />
-    <Compile Include="Service\Role.cs" />
-    <Compile Include="Service\ViewFilter.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\MyDb.mdf" />
-    <Content Include="App_Data\MyDb_log.ldf">
-      <DependentUpon>MyDb.mdf</DependentUpon>
+    <Content Include="App_Data\DbKoniec.mdf" />
+    <Content Include="App_Data\DbKoniec_log.ldf">
+      <DependentUpon>DbKoniec.mdf</DependentUpon>
     </Content>
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -317,41 +270,20 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
-    <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
-    <Content Include="Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="Fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-grid.css.map" />
-    <Content Include="Content\bootstrap-grid.min.css.map" />
-    <Content Include="Content\bootstrap-grid.rtl.css.map" />
-    <Content Include="Content\bootstrap-grid.rtl.min.css.map" />
-    <Content Include="Content\bootstrap-reboot.css.map" />
-    <Content Include="Content\bootstrap-reboot.min.css.map" />
-    <Content Include="Content\bootstrap-reboot.rtl.css.map" />
-    <Content Include="Content\bootstrap-reboot.rtl.min.css.map" />
-    <Content Include="Content\bootstrap-utilities.css.map" />
-    <Content Include="Content\bootstrap-utilities.min.css.map" />
-    <Content Include="Content\bootstrap-utilities.rtl.css.map" />
-    <Content Include="Content\bootstrap-utilities.rtl.min.css.map" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.rtl.css.map" />
-    <Content Include="Content\bootstrap.rtl.min.css.map" />
-    <None Include="Scripts\jquery-3.4.1.intellisense.js" />
-    <Content Include="Scripts\jquery-3.4.1.js" />
-    <Content Include="Scripts\jquery-3.4.1.min.js" />
-    <Content Include="Scripts\jquery-3.4.1.slim.js" />
-    <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
+    <None Include="Scripts\jquery-3.7.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.7.1.js" />
+    <Content Include="Scripts\jquery-3.7.1.min.js" />
+    <Content Include="Scripts\jquery-3.7.1.slim.js" />
+    <Content Include="Scripts\jquery-3.7.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -367,80 +299,90 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Absence\Create.cshtml" />
-    <Content Include="Views\Absence\Index.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
-    <Content Include="Views\Account\EditOther.cshtml" />
-    <Content Include="Views\Account\EditStudent.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\LoginDetails.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Child\AbsenceList.cshtml" />
-    <Content Include="Views\Child\ClassDetails.cshtml" />
-    <Content Include="Views\Child\GradeList.cshtml" />
-    <Content Include="Views\Child\Index.cshtml" />
-    <Content Include="Views\Child\StudentDetails.cshtml" />
-    <Content Include="Views\Class\Create.cshtml" />
-    <Content Include="Views\Class\CreateAnnouncement.cshtml" />
-    <Content Include="Views\Class\Details.cshtml" />
-    <Content Include="Views\Class\Edit.cshtml" />
-    <Content Include="Views\Class\GenerateGradeSheet.cshtml" />
-    <Content Include="Views\Class\Index.cshtml" />
-    <Content Include="Views\Class\ShowGradeSheet.cshtml" />
-    <Content Include="Views\GlobalAnnouncement\Create.cshtml" />
-    <Content Include="Views\GlobalAnnouncement\Delete.cshtml" />
-    <Content Include="Views\GlobalAnnouncement\Details.cshtml" />
-    <Content Include="Views\GlobalAnnouncement\Edit.cshtml" />
-    <Content Include="Views\GlobalAnnouncement\Index.cshtml" />
-    <Content Include="Views\Grade\Create.cshtml" />
-    <Content Include="Views\Grade\Index.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
     <Content Include="Views\Manage\ChangePassword.cshtml" />
     <Content Include="Views\Manage\Index.cshtml" />
     <Content Include="Views\Manage\ManageLogins.cshtml" />
     <Content Include="Views\Manage\SetPassword.cshtml" />
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
-    <Content Include="Views\Message\AddRecipient.cshtml" />
-    <Content Include="Views\Message\Create.cshtml" />
-    <Content Include="Views\Message\Details.cshtml" />
-    <Content Include="Views\Message\Index.cshtml" />
-    <Content Include="Views\Quiz\AddAnswer.cshtml" />
-    <Content Include="Views\Quiz\AddQuestion.cshtml" />
-    <Content Include="Views\Quiz\AddQuizSharing.cshtml" />
-    <Content Include="Views\Quiz\Create.cshtml" />
-    <Content Include="Views\Quiz\Do.cshtml" />
-    <Content Include="Views\Quiz\Edit.cshtml" />
-    <Content Include="Views\Quiz\Index.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Student\Details.cshtml" />
-    <Content Include="Views\Subject\AddFile.cshtml" />
-    <Content Include="Views\Subject\Create.cshtml" />
-    <Content Include="Views\Subject\Details.cshtml" />
-    <Content Include="Views\Subject\Edit.cshtml" />
-    <Content Include="Views\Subject\Index.cshtml" />
+    <Content Include="Views\Parents\Create.cshtml" />
+    <Content Include="Views\Parents\Delete.cshtml" />
+    <Content Include="Views\Parents\Details.cshtml" />
+    <Content Include="Views\Parents\Edit.cshtml" />
+    <Content Include="Views\Parents\Index.cshtml" />
+    <Content Include="Views\Students\Create.cshtml" />
+    <Content Include="Views\Students\Delete.cshtml" />
+    <Content Include="Views\Students\Details.cshtml" />
+    <Content Include="Views\Students\Edit.cshtml" />
+    <Content Include="Views\Students\Index.cshtml" />
+    <Content Include="Views\Subjects\Create.cshtml" />
+    <Content Include="Views\Subjects\Delete.cshtml" />
+    <Content Include="Views\Subjects\Details.cshtml" />
+    <Content Include="Views\Subjects\Edit.cshtml" />
+    <Content Include="Views\Subjects\Index.cshtml" />
+    <Content Include="Views\Tests\Create.cshtml" />
+    <Content Include="Views\Tests\Delete.cshtml" />
+    <Content Include="Views\Tests\Details.cshtml" />
+    <Content Include="Views\Tests\Edit.cshtml" />
+    <Content Include="Views\Tests\Index.cshtml" />
+    <Content Include="Views\Classes\Create.cshtml" />
+    <Content Include="Views\Classes\Delete.cshtml" />
+    <Content Include="Views\Classes\Details.cshtml" />
+    <Content Include="Views\Classes\Edit.cshtml" />
+    <Content Include="Views\Classes\Index.cshtml" />
+    <Content Include="Views\Grades\Create.cshtml" />
+    <Content Include="Views\Grades\Delete.cshtml" />
+    <Content Include="Views\Grades\Details.cshtml" />
+    <Content Include="Views\Grades\Edit.cshtml" />
+    <Content Include="Views\Grades\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202312172111519_InitialCreate.resx">
-      <DependentUpon>202312172111519_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202401101644153_init.resx">
+      <DependentUpon>202401101644153_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401101826222_AddRole.resx">
+      <DependentUpon>202401101826222_AddRole.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401101858060_AddRole1.resx">
+      <DependentUpon>202401101858060_AddRole1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap.rtl.min.css.map" />
+    <Content Include="Content\bootstrap.rtl.css.map" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-utilities.rtl.min.css.map" />
+    <Content Include="Content\bootstrap-utilities.rtl.css.map" />
+    <Content Include="Content\bootstrap-utilities.min.css.map" />
+    <Content Include="Content\bootstrap-utilities.css.map" />
+    <Content Include="Content\bootstrap-reboot.rtl.min.css.map" />
+    <Content Include="Content\bootstrap-reboot.rtl.css.map" />
+    <Content Include="Content\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\bootstrap-reboot.css.map" />
+    <Content Include="Content\bootstrap-grid.rtl.min.css.map" />
+    <Content Include="Content\bootstrap-grid.rtl.css.map" />
+    <Content Include="Content\bootstrap-grid.min.css.map" />
+    <Content Include="Content\bootstrap-grid.css.map" />
     <None Include="packages.config" />
     <Content Include="Scripts\bootstrap.min.js.map" />
     <Content Include="Scripts\bootstrap.js.map" />
@@ -448,9 +390,10 @@
     <Content Include="Scripts\bootstrap.esm.js.map" />
     <Content Include="Scripts\bootstrap.bundle.min.js.map" />
     <Content Include="Scripts\bootstrap.bundle.js.map" />
-    <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.4.1.min.map" />
+    <Content Include="Scripts\jquery-3.7.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.7.1.min.map" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -467,9 +410,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>59872</DevelopmentServerPort>
+          <DevelopmentServerPort>61694</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44312/</IISUrl>
+          <IISUrl>https://localhost:44301/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
@@ -483,11 +426,9 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
-    <Error Condition="!Exists('packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
-    <Error Condition="!Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets'))" />
   </Target>
-  <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
