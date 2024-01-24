@@ -44,6 +44,7 @@ namespace NowyDziennik.Models
         public DbSet<Parent> Parents { get; set; }
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<Admin> Admins { get; set; }
+        public DbSet<TeacherClassSubject> TeacherClassSubject { get; set; }
 
         //protected override void OnModelCreating(DbModelBuilder modelBuilder)
         //{

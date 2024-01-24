@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace NowyDziennik.Models
 {
@@ -10,6 +11,8 @@ namespace NowyDziennik.Models
         public string SubjectName { get; set; } = string.Empty;
         [Required]
         public string SubjectDescription { get; set; }
+
+        public virtual ICollection<TeacherClassSubject> TeacherClassSubjects { get; set; }
 
     }
 }
