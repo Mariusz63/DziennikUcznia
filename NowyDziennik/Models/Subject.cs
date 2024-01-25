@@ -16,6 +16,6 @@ namespace NowyDziennik.Models
         public virtual ICollection<Grade> Grades { get; set; } // Oceny z przedmiotu
         public virtual ICollection<Test> Tests { get; set; }
 
-        public virtual ICollection<StudentSubject> StudentSubjects { get; set; } // Nowa linia
+        public virtual ICollection<StudentSubject> StudentSubjects { get; set; } 
     }
 }

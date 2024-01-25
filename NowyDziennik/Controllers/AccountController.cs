@@ -151,6 +151,12 @@ namespace NowyDziennik.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            IdentityManager IM = new IdentityManager();
+            IM.CreateRole("Admin");
+            IM.CreateRole("Teacher");
+            IM.CreateRole("Parent");
+            IM.CreateRole("Student");
+
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.FirstName, LastName = model.SecondName, Email = model.Email, 
@@ -170,21 +176,25 @@ namespace NowyDziennik.Controllers
 
                     if(user.SelectedRole == "Teacher")
                     {
+                        IM.AddUserToRole(user.Id,model.RoleTaken);
                         Db.Teachers.Add(new Teacher { TeacherId = user.Id });
                     }
 
                     if (user.SelectedRole == "Admin")
                     {
+                        IM.AddUserToRole(user.Id, model.RoleTaken);
                         Db.Admins.Add(new Admin { AdminId = user.Id });
                     }
 
                     if (user.SelectedRole == "Parent")
                     {
+                        IM.AddUserToRole(user.Id, model.RoleTaken);
                         Db.Parents.Add(new Parent { ParentId = user.Id });
                     }
 
                     if (user.SelectedRole == "Student")
                     {
+                        IM.AddUserToRole(user.Id, model.RoleTaken);
                         Db.Students.Add(new Student { StudentId = user.Id });
                     }
 

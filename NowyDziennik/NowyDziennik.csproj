@@ -169,6 +169,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AnnouncementsController.cs" />
     <Compile Include="Controllers\ClassesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -188,10 +189,19 @@
     <Compile Include="Migrations\202401251553085_AddMessageGradeAndRelations.designer.cs">
       <DependentUpon>202401251553085_AddMessageGradeAndRelations.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202401251730186_AddAnnoucementRelations.cs" />
+    <Compile Include="Migrations\202401251730186_AddAnnoucementRelations.designer.cs">
+      <DependentUpon>202401251730186_AddAnnoucementRelations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202401251738424_AddTestTeacherRelation.cs" />
+    <Compile Include="Migrations\202401251738424_AddTestTeacherRelation.designer.cs">
+      <DependentUpon>202401251738424_AddTestTeacherRelation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Announcement.cs" />
+    <Compile Include="Models\AnnouncementUser.cs" />
     <Compile Include="Models\Class.cs" />
     <Compile Include="Models\FileType.cs" />
     <Compile Include="Models\Grade.cs" />
@@ -289,6 +299,11 @@
     <Content Include="Views\Classes\Details.cshtml" />
     <Content Include="Views\Classes\Edit.cshtml" />
     <Content Include="Views\Classes\Index.cshtml" />
+    <Content Include="Views\Announcements\Create.cshtml" />
+    <Content Include="Views\Announcements\Delete.cshtml" />
+    <Content Include="Views\Announcements\Details.cshtml" />
+    <Content Include="Views\Announcements\Edit.cshtml" />
+    <Content Include="Views\Announcements\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
@@ -326,6 +341,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202401251553085_AddMessageGradeAndRelations.resx">
       <DependentUpon>202401251553085_AddMessageGradeAndRelations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401251730186_AddAnnoucementRelations.resx">
+      <DependentUpon>202401251730186_AddAnnoucementRelations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401251738424_AddTestTeacherRelation.resx">
+      <DependentUpon>202401251738424_AddTestTeacherRelation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

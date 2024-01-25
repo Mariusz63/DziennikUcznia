@@ -16,5 +16,7 @@ namespace NowyDziennik.Models
         [ForeignKey("FileTypeId")]
         public virtual FileType FileType { get; set; }
 
+        public virtual ICollection<AnnouncementUser> AnnouncementUsers { get; set; }
+
     }
 }

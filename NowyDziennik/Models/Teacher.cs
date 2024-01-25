@@ -12,6 +12,6 @@ namespace NowyDziennik.Models
         [ForeignKey("TeacherId")]
         public virtual ApplicationUser ApplicationUser { get; set; }
         public virtual ICollection<TeacherClassSubject> TeacherClassSubjects { get; set; }
-
+        public virtual ICollection<Test> Tests { get; set; }
     }
 }

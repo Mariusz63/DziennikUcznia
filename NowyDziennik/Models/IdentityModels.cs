@@ -52,7 +52,8 @@ namespace NowyDziennik.Models
         public DbSet<Announcement> Announcements { get; set; }
         public DbSet<FileType> FileTypes { get; set; }
         public DbSet<StudentGrade> StudentGrade { get; set; }
-        public DbSet<StudentSubject> StudentSubjects { get; set; } // Nowa linia
+        public DbSet<StudentSubject> StudentSubjects { get; set; }
+        public DbSet<AnnouncementUser> AnnouncementUser { get; set; }
 
 
 

@@ -20,11 +20,6 @@
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method
             //  to avoid creating duplicate seed data.
 
-            IdentityManager IM = new IdentityManager();
-            IM.CreateRole("Admin");
-            IM.CreateRole("Teacher");
-            IM.CreateRole("Parent");
-            IM.CreateRole("Student");
         }
     }
 }
