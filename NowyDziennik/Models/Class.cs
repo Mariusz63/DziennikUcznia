@@ -11,6 +11,7 @@ namespace NowyDziennik.Models
     {
         [Key]
         public int ClassId { get; set; }
+        public string ClassName { get; set; }
         public string SupervisorId { get; set; }
         public string Description { get; set; }
 

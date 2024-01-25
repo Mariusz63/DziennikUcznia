@@ -45,21 +45,38 @@ namespace NowyDziennik.Models
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<Admin> Admins { get; set; }
         public DbSet<TeacherClassSubject> TeacherClassSubject { get; set; }
+        public DbSet<Class> Classes { get; set; }
+        public DbSet<Grade> Grades { get; set; }
+        public DbSet<Test> Tests { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<Announcement> Announcements { get; set; }
+        public DbSet<FileType> FileTypes { get; set; }
+        public DbSet<StudentGrade> StudentGrade { get; set; }
+        public DbSet<StudentSubject> StudentSubjects { get; set; } // Nowa linia
+
+
 
         //protected override void OnModelCreating(DbModelBuilder modelBuilder)
         //{
         //    base.OnModelCreating(modelBuilder);
 
-        //     modelBuilder.Entity<Student>()
-        //         .HasMany(s => s.Subjects)
-        //         .WithMany(s => s.Students)
-        //         .Map(cs =>
-        //         {
-        //             cs.MapLeftKey("StudentId");
-        //             cs.MapRightKey("SubjectId");
-        //             cs.ToTable("StudentSubjects");
-        //         });
+        //    modelBuilder.Entity<Student>()
+        //        .HasMany(s => s.Subjects)
+        //        .WithMany(s => s.Students)
+        //        .Map(cs =>
+        //        {
+        //            cs.MapLeftKey("StudentId");
+        //            cs.MapRightKey("SubjectId");
+        //            cs.ToTable("StudentSubjects");
+        //        });
+
+        //    modelBuilder.Entity<Student>()
+        //   .HasMany(s => s.Grades)
+        //   .WithOne(g => g.Student)
+        //   .HasForeignKey(g => g.StudentId);
         //}
+
+
     }
 
 

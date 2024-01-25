@@ -169,6 +169,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ClassesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Enum\RolesEnum.cs" />
@@ -179,17 +180,32 @@
     <Compile Include="Migrations\202401242131404_First.designer.cs">
       <DependentUpon>202401242131404_First.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202401250740582_AddNameToClass.cs" />
+    <Compile Include="Migrations\202401250740582_AddNameToClass.designer.cs">
+      <DependentUpon>202401250740582_AddNameToClass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202401251553085_AddMessageGradeAndRelations.cs" />
+    <Compile Include="Migrations\202401251553085_AddMessageGradeAndRelations.designer.cs">
+      <DependentUpon>202401251553085_AddMessageGradeAndRelations.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Admin.cs" />
+    <Compile Include="Models\Announcement.cs" />
     <Compile Include="Models\Class.cs" />
+    <Compile Include="Models\FileType.cs" />
+    <Compile Include="Models\Grade.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Parent.cs" />
     <Compile Include="Models\Student.cs" />
+    <Compile Include="Models\StudentGrade.cs" />
+    <Compile Include="Models\StudentSubject.cs" />
     <Compile Include="Models\Subject.cs" />
     <Compile Include="Models\Teacher.cs" />
     <Compile Include="Models\TeacherClassSubject.cs" />
+    <Compile Include="Models\Test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -268,6 +284,11 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Classes\Create.cshtml" />
+    <Content Include="Views\Classes\Delete.cshtml" />
+    <Content Include="Views\Classes\Details.cshtml" />
+    <Content Include="Views\Classes\Edit.cshtml" />
+    <Content Include="Views\Classes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
@@ -299,6 +320,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202401242131404_First.resx">
       <DependentUpon>202401242131404_First.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401250740582_AddNameToClass.resx">
+      <DependentUpon>202401250740582_AddNameToClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401251553085_AddMessageGradeAndRelations.resx">
+      <DependentUpon>202401251553085_AddMessageGradeAndRelations.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

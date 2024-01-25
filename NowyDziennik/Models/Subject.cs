@@ -13,6 +13,9 @@ namespace NowyDziennik.Models
         public string SubjectDescription { get; set; }
 
         public virtual ICollection<TeacherClassSubject> TeacherClassSubjects { get; set; }
+        public virtual ICollection<Grade> Grades { get; set; } // Oceny z przedmiotu
+        public virtual ICollection<Test> Tests { get; set; }
 
+        public virtual ICollection<StudentSubject> StudentSubjects { get; set; } // Nowa linia
     }
 }
