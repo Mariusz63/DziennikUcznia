@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace NowyDziennik.Models
 {
@@ -20,6 +17,8 @@ namespace NowyDziennik.Models
 
         public virtual ICollection<Student> Students { get; set; }
         public virtual ICollection<TeacherClassSubject> TeacherClassSubjects { get; set; }
+
+        public virtual ICollection<ClassTopic> ClassTopics { get; set; }
 
     }
 }

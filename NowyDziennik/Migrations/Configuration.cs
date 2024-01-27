@@ -1,10 +1,6 @@
 ﻿namespace NowyDziennik.Migrations
 {
-    using NowyDziennik.Models;
-    using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Linq;
 
     public sealed class Configuration : DbMigrationsConfiguration<NowyDziennik.Models.ApplicationDbContext>
     {

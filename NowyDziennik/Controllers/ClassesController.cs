@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using NowyDziennik.Models;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using NowyDziennik.Models;
 
 namespace NowyDziennik.Controllers
 {
@@ -17,9 +14,24 @@ namespace NowyDziennik.Controllers
         // GET: Classes
         public ActionResult Index()
         {
-           // var classes = db.Classes.Include(@ => @.Teacher);
+            // var classes = db.Classes.Include(@ => @.Teacher);
             return View(db.Classes.ToList());
         }
+
+        // GET: Classes/Details/5
+        //public ActionResult Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Class @class = db.Classes.Find(id);
+        //    if (@class == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(@class);
+        //}
 
         // GET: Classes/Details/5
         public ActionResult Details(int? id)
@@ -28,13 +40,51 @@ namespace NowyDziennik.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Class @class = db.Classes.Find(id);
+
+            Class @class = db.Classes.Include(c => c.ClassTopics).SingleOrDefault(c => c.ClassId == id);
+
             if (@class == null)
             {
                 return HttpNotFound();
             }
+
             return View(@class);
         }
+
+        // GET: Classes/AddTopic/5
+        public ActionResult AddTopic(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Class @class = db.Classes.Find(id);
+
+            if (@class == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(new ClassTopic { ClassId = @class.ClassId });
+        }
+
+        // POST: Classes/AddTopic/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddTopic([Bind(Include = "ClassTopicId,Topic,Description,ClassId")] ClassTopic classTopic)
+        {
+            if (ModelState.IsValid)
+            {
+                db.ClassTopics.Add(classTopic);
+                db.SaveChanges();
+                return RedirectToAction("Details", new { id = classTopic.ClassId });
+            }
+
+            return View(classTopic);
+        }
+
+
 
         // GET: Classes/Create
         public ActionResult Create()

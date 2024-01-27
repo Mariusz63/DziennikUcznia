@@ -1,8 +1,7 @@
 ﻿namespace NowyDziennik.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class First : DbMigration
     {
         public override void Up()
@@ -10,23 +9,23 @@
             CreateTable(
                 "dbo.Classes",
                 c => new
-                    {
-                        ClassId = c.Int(nullable: false, identity: true),
-                        SupervisorId = c.String(maxLength: 128),
-                        Description = c.String(),
-                    })
+                {
+                    ClassId = c.Int(nullable: false, identity: true),
+                    SupervisorId = c.String(maxLength: 128),
+                    Description = c.String(),
+                })
                 .PrimaryKey(t => t.ClassId)
                 .ForeignKey("dbo.Teachers", t => t.SupervisorId)
                 .Index(t => t.SupervisorId);
-            
+
             CreateTable(
                 "dbo.TeacherClassSubjects",
                 c => new
-                    {
-                        TeacherId = c.String(nullable: false, maxLength: 128),
-                        ClassId = c.Int(nullable: false),
-                        SubjectId = c.Int(nullable: false),
-                    })
+                {
+                    TeacherId = c.String(nullable: false, maxLength: 128),
+                    ClassId = c.Int(nullable: false),
+                    SubjectId = c.Int(nullable: false),
+                })
                 .PrimaryKey(t => new { t.TeacherId, t.ClassId, t.SubjectId })
                 .ForeignKey("dbo.Classes", t => t.ClassId, cascadeDelete: true)
                 .ForeignKey("dbo.Subjects", t => t.SubjectId, cascadeDelete: true)
@@ -34,7 +33,7 @@
                 .Index(t => t.TeacherId)
                 .Index(t => t.ClassId)
                 .Index(t => t.SubjectId);
-            
+
             AddColumn("dbo.Students", "ClassId", c => c.Int(nullable: false));
             AlterColumn("dbo.Students", "ParentId", c => c.String(maxLength: 128));
             CreateIndex("dbo.Students", "StudentId");
@@ -44,7 +43,7 @@
             AddForeignKey("dbo.Students", "ParentId", "dbo.Parents", "ParentId");
             AddForeignKey("dbo.Students", "StudentId", "dbo.AspNetUsers", "Id");
         }
-        
+
         public override void Down()
         {
             DropForeignKey("dbo.Students", "StudentId", "dbo.AspNetUsers");

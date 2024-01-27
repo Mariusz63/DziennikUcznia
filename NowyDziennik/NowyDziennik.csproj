@@ -171,6 +171,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AnnouncementsController.cs" />
     <Compile Include="Controllers\ClassesController.cs" />
+    <Compile Include="Controllers\ClassTopicsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Enum\RolesEnum.cs" />
@@ -197,18 +198,39 @@
     <Compile Include="Migrations\202401251738424_AddTestTeacherRelation.designer.cs">
       <DependentUpon>202401251738424_AddTestTeacherRelation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202401262304169_TestQuestions.cs" />
+    <Compile Include="Migrations\202401262304169_TestQuestions.designer.cs">
+      <DependentUpon>202401262304169_TestQuestions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202401262332552_AddTopicToClass.cs" />
+    <Compile Include="Migrations\202401262332552_AddTopicToClass.designer.cs">
+      <DependentUpon>202401262332552_AddTopicToClass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202401270007135_AddFileSaveInClassTopic.cs" />
+    <Compile Include="Migrations\202401270007135_AddFileSaveInClassTopic.designer.cs">
+      <DependentUpon>202401270007135_AddFileSaveInClassTopic.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202401270044457_test.cs" />
+    <Compile Include="Migrations\202401270044457_test.designer.cs">
+      <DependentUpon>202401270044457_test.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Announcement.cs" />
     <Compile Include="Models\AnnouncementUser.cs" />
+    <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\Class.cs" />
+    <Compile Include="Models\ClassTopic.cs" />
+    <Compile Include="Models\ClassTopicViewModel.cs" />
+    <Compile Include="Models\FileAttachment.cs" />
     <Compile Include="Models\FileType.cs" />
     <Compile Include="Models\Grade.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Parent.cs" />
+    <Compile Include="Models\Question.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Models\StudentGrade.cs" />
     <Compile Include="Models\StudentSubject.cs" />
@@ -216,6 +238,8 @@
     <Compile Include="Models\Teacher.cs" />
     <Compile Include="Models\TeacherClassSubject.cs" />
     <Compile Include="Models\Test.cs" />
+    <Compile Include="Models\TestViewModel.cs" />
+    <Compile Include="Controllers\TestViewModelsController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -304,6 +328,16 @@
     <Content Include="Views\Announcements\Details.cshtml" />
     <Content Include="Views\Announcements\Edit.cshtml" />
     <Content Include="Views\Announcements\Index.cshtml" />
+    <Content Include="Views\TestViewModels\Create.cshtml" />
+    <Content Include="Views\TestViewModels\Delete.cshtml" />
+    <Content Include="Views\TestViewModels\Details.cshtml" />
+    <Content Include="Views\TestViewModels\Edit.cshtml" />
+    <Content Include="Views\TestViewModels\Index.cshtml" />
+    <Content Include="Views\ClassTopics\Create.cshtml" />
+    <Content Include="Views\ClassTopics\Delete.cshtml" />
+    <Content Include="Views\ClassTopics\Details.cshtml" />
+    <Content Include="Views\ClassTopics\Edit.cshtml" />
+    <Content Include="Views\ClassTopics\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
@@ -347,6 +381,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202401251738424_AddTestTeacherRelation.resx">
       <DependentUpon>202401251738424_AddTestTeacherRelation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401262304169_TestQuestions.resx">
+      <DependentUpon>202401262304169_TestQuestions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401262332552_AddTopicToClass.resx">
+      <DependentUpon>202401262332552_AddTopicToClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401270007135_AddFileSaveInClassTopic.resx">
+      <DependentUpon>202401270007135_AddFileSaveInClassTopic.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401270044457_test.resx">
+      <DependentUpon>202401270044457_test.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

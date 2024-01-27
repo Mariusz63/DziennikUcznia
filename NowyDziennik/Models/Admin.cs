@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace NowyDziennik.Models
 {
     public class Admin
     {
         [Key]
-        public string AdminId {  get; set; }
+        public string AdminId { get; set; }
 
         public virtual ApplicationUser ApplicationUser { get; set; }
     }

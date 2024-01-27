@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace NowyDziennik.Models
 {
@@ -27,7 +24,7 @@ namespace NowyDziennik.Models
         [ForeignKey("SubjectId")]
         public virtual Subject Subject { get; set; }
 
-        public virtual ICollection<StudentGrade> StudentGrades { get; set; } 
+        public virtual ICollection<StudentGrade> StudentGrades { get; set; }
 
     }
 }

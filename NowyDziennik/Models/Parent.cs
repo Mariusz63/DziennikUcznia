@@ -5,11 +5,11 @@ namespace NowyDziennik.Models
 {
     public class Parent
     {
-        [Key] 
+        [Key]
         public string ParentId { get; set; }
 
         [ForeignKey("ParentId")]
         public virtual ApplicationUser ApplicationUser { get; set; }
-    
+
     }
 }

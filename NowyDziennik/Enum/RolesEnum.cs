@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace NowyDziennik.Enum
+﻿namespace NowyDziennik.Enum
 {
     public enum RolesEnum
     {
-        Admin, 
+        Admin,
         Teacher,
         Student,
         Parent

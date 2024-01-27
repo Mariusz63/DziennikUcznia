@@ -1,15 +1,11 @@
-﻿using System;
-using System.Globalization;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using NowyDziennik.Models;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using NowyDziennik.Enum;
-using NowyDziennik.Models;
 
 namespace NowyDziennik.Controllers
 {
@@ -18,13 +14,13 @@ namespace NowyDziennik.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private ApplicationDbContext Db =  ApplicationDbContext.Create();
+        private ApplicationDbContext Db = ApplicationDbContext.Create();
 
         public AccountController()
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -36,9 +32,9 @@ namespace NowyDziennik.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -122,7 +118,7 @@ namespace NowyDziennik.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -159,24 +155,30 @@ namespace NowyDziennik.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.FirstName, LastName = model.SecondName, Email = model.Email, 
-                    PhoneNumber = model.PhoneNum, SelectedRole = model.RoleTaken };
+                var user = new ApplicationUser
+                {
+                    UserName = model.FirstName,
+                    LastName = model.SecondName,
+                    Email = model.Email,
+                    PhoneNumber = model.PhoneNum,
+                    SelectedRole = model.RoleTaken
+                };
 
                 var result = await UserManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    if(user.SelectedRole == "Teacher")
+                    if (user.SelectedRole == "Teacher")
                     {
-                        IM.AddUserToRole(user.Id,model.RoleTaken);
+                        IM.AddUserToRole(user.Id, model.RoleTaken);
                         Db.Teachers.Add(new Teacher { TeacherId = user.Id });
                     }
 
