@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NowyDziennik.Models
 {
@@ -21,5 +22,7 @@ namespace NowyDziennik.Models
 
         // Relacja z pytaniami
         public ICollection<Question> Questions { get; set; }
+
+       // public StudentGrade StudentGrade { get; set; }
     }
 }

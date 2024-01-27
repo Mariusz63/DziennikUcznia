@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using NowyDziennik.Enum;
 using NowyDziennik.Models;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -13,7 +14,8 @@ namespace NowyDziennik.Models
     {
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
-        public string SelectedRole { get; set; }
+        public string SelectedRole { get; set; } = RolesEnum.Student.ToString();
+        public byte[] ProfilePhoto { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -53,7 +55,7 @@ namespace NowyDziennik.Models
         public DbSet<AnnouncementUser> AnnouncementUser { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answer { get; set; }
-        public DbSet<TestViewModel> TestViewModels { get; set; }
+       // public DbSet<TestViewModel> TestViewModels { get; set; }
        // public DbSet<ClassTopicViewModel> ClassTopicViewModels { get; set; }
         public DbSet<FileAttachment> FileAttachments { get; set; }
         public DbSet<ClassTopic> ClassTopics { get; set; }
@@ -77,17 +79,17 @@ namespace NowyDziennik.Models
            //.WithOne(g => g.Student)
            //.HasForeignKey(g => g.StudentId);
 
-           // Configure the Class - Topic relationship
-            modelBuilder.Entity<Class>()
-            .HasMany(c => c.ClassTopics)
-            .WithRequired(ct => ct.Class)
-            .HasForeignKey(ct => ct.ClassId);
+           //// Configure the Class - Topic relationship
+           // modelBuilder.Entity<Class>()
+           // .HasMany(c => c.ClassTopics)
+           // .WithRequired(ct => ct.Class)
+           // .HasForeignKey(ct => ct.ClassId);
 
-            // Configure the ClassTopic-FileAttachment relationship
-            modelBuilder.Entity<ClassTopic>()
-                .HasMany(ct => ct.FileAttachments)
-                .WithRequired(fa => fa.ClassTopic)
-                .HasForeignKey(fa => fa.ClassTopicId);
+           // // Configure the ClassTopic-FileAttachment relationship
+           // modelBuilder.Entity<ClassTopic>()
+           //     .HasMany(ct => ct.FileAttachments)
+           //     .WithRequired(fa => fa.ClassTopic)
+           //     .HasForeignKey(fa => fa.ClassTopicId);
         }
 
     }

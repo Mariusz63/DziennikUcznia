@@ -1,6 +1,7 @@
 ﻿using NowyDziennik.Enum;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web;
 using System.Web.WebPages.Html;
 
 namespace NowyDziennik.Models
@@ -101,6 +102,9 @@ namespace NowyDziennik.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Display(Name = "Profile Photo")]
+        public HttpPostedFileBase Photo { get; set; }
     }
 
     public class ResetPasswordViewModel

@@ -214,6 +214,18 @@
     <Compile Include="Migrations\202401270044457_test.designer.cs">
       <DependentUpon>202401270044457_test.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202401271901268_AddTestViewModelQuestions.cs" />
+    <Compile Include="Migrations\202401271901268_AddTestViewModelQuestions.designer.cs">
+      <DependentUpon>202401271901268_AddTestViewModelQuestions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202401271910593_AddTestGradeStudentSubjectRelations.cs" />
+    <Compile Include="Migrations\202401271910593_AddTestGradeStudentSubjectRelations.designer.cs">
+      <DependentUpon>202401271910593_AddTestGradeStudentSubjectRelations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202401272231472_AddUserPhoto.cs" />
+    <Compile Include="Migrations\202401272231472_AddUserPhoto.designer.cs">
+      <DependentUpon>202401272231472_AddUserPhoto.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Admin.cs" />
@@ -221,6 +233,7 @@
     <Compile Include="Models\AnnouncementUser.cs" />
     <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\Class.cs" />
+    <Compile Include="Models\ClassSelectionViewModel.cs" />
     <Compile Include="Models\ClassTopic.cs" />
     <Compile Include="Models\ClassTopicViewModel.cs" />
     <Compile Include="Models\FileAttachment.cs" />
@@ -233,13 +246,13 @@
     <Compile Include="Models\Question.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Models\StudentGrade.cs" />
+    <Compile Include="Models\StudentSelectionViewModel.cs" />
     <Compile Include="Models\StudentSubject.cs" />
     <Compile Include="Models\Subject.cs" />
     <Compile Include="Models\Teacher.cs" />
     <Compile Include="Models\TeacherClassSubject.cs" />
     <Compile Include="Models\Test.cs" />
     <Compile Include="Models\TestViewModel.cs" />
-    <Compile Include="Controllers\TestViewModelsController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -328,11 +341,6 @@
     <Content Include="Views\Announcements\Details.cshtml" />
     <Content Include="Views\Announcements\Edit.cshtml" />
     <Content Include="Views\Announcements\Index.cshtml" />
-    <Content Include="Views\TestViewModels\Create.cshtml" />
-    <Content Include="Views\TestViewModels\Delete.cshtml" />
-    <Content Include="Views\TestViewModels\Details.cshtml" />
-    <Content Include="Views\TestViewModels\Edit.cshtml" />
-    <Content Include="Views\TestViewModels\Index.cshtml" />
     <Content Include="Views\ClassTopics\Create.cshtml" />
     <Content Include="Views\ClassTopics\Delete.cshtml" />
     <Content Include="Views\ClassTopics\Details.cshtml" />
@@ -393,6 +401,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202401270044457_test.resx">
       <DependentUpon>202401270044457_test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401271901268_AddTestViewModelQuestions.resx">
+      <DependentUpon>202401271901268_AddTestViewModelQuestions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401271910593_AddTestGradeStudentSubjectRelations.resx">
+      <DependentUpon>202401271910593_AddTestGradeStudentSubjectRelations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401272231472_AddUserPhoto.resx">
+      <DependentUpon>202401272231472_AddUserPhoto.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

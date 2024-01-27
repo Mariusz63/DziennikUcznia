@@ -1,11 +1,16 @@
 ﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using NowyDziennik.Models;
+using System.IO;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
+using NowyDziennik.Migrations;
 
 namespace NowyDziennik.Controllers
 {
@@ -14,6 +19,7 @@ namespace NowyDziennik.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext db = ApplicationDbContext.Create();
 
         public ManageController()
         {
@@ -330,6 +336,52 @@ namespace NowyDziennik.Controllers
             }
 
             base.Dispose(disposing);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ActionName("UploadPhoto")]
+        public async Task<ActionResult> UploadPhoto(AddProfilePhotoViewModel addUserPhoto,HttpPostedFileBase photo)
+        {
+            if (photo != null && photo.ContentLength > 0)
+            {
+                using (var ms = new MemoryStream())
+                {
+                    photo.InputStream.CopyTo(ms);
+                    addUserPhoto.ProfilePhoto = ms.ToArray();
+                }
+
+                try
+                {
+                    // Convert the photo to a byte array
+                    byte[] photoBytes;
+                    using (var binaryReader = new BinaryReader(photo.InputStream))
+                    {
+                        photoBytes = binaryReader.ReadBytes(photo.ContentLength);
+                    }
+
+                    // Save the photo bytes to the user's profile
+                    var userId = User.Identity.GetUserId();
+                    var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+                    var user = await userManager.FindByIdAsync(userId);
+                    user.ProfilePhoto = photoBytes;
+                    await userManager.UpdateAsync(user);
+                    db.SaveChanges();
+                    ViewBag.StatusMessage = "Profile photo uploaded successfully.";
+                }
+                catch (Exception ex)
+                {
+                    // Handle exceptions, log errors, etc.
+                    ViewBag.StatusMessage = "Error uploading profile photo: " + ex.Message;
+                }
+            }
+            else
+            {
+                ViewBag.StatusMessage = "No file selected for upload.";
+            }
+
+            // Redirect back to the Manage view
+            return RedirectToAction("Index");
         }
 
         #region Helpers

@@ -6,6 +6,7 @@ namespace NowyDziennik.Models
     {
         public int QuestionId { get; set; }
         public string Content { get; set; }
+        public float Points { get; set; }
 
         // Relacja z testem
         public int TestId { get; set; }
