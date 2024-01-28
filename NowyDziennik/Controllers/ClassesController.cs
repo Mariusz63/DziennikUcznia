@@ -9,7 +9,7 @@ namespace NowyDziennik.Controllers
 {
     public class ClassesController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext db = ApplicationDbContext.Create();
 
         // GET: Classes
         public ActionResult Index()
@@ -78,11 +78,14 @@ namespace NowyDziennik.Controllers
             {
                 db.ClassTopics.Add(classTopic);
                 db.SaveChanges();
-                return RedirectToAction("Details", new { id = classTopic.ClassId });
+
+                // Redirect to the Details action of the ClassTopicsController with the ClassId parameter
+                return RedirectToAction("Index", "ClassTopics", new { classId = classTopic.ClassId });
             }
 
             return View(classTopic);
         }
+
 
 
 

@@ -14,7 +14,7 @@ namespace NowyDziennik.Controllers
 {
     public class MessagesController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext db = ApplicationDbContext.Create();
 
         // GET: Messages
         //public ActionResult Index()

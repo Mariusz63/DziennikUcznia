@@ -15,5 +15,25 @@ namespace NowyDziennik
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
         }
+
+        public static void ClassTopicRoutes(RouteCollection routes)
+        {
+                routes.MapRoute(
+                name: "DefaultClassTopic",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+            );
+
+        }
+
+        public static void DownloadFile(RouteCollection routes)
+        {
+            routes.MapRoute(
+            name: "DownloadFile",
+            url: "ClassTopics/DownloadFile/{id}",
+            defaults: new { controller = "ClassTopics", action = "DownloadFile" }
+             );
+
+        }
     }
 }

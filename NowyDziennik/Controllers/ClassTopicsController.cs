@@ -3,19 +3,33 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
 
 namespace NowyDziennik.Controllers
 {
     public class ClassTopicsController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext db =ApplicationDbContext.Create();
 
         // GET: ClassTopics
-        public ActionResult Index()
+        //public ActionResult Index()
+        //{
+        //    var classTopics = db.ClassTopics.Include(c => c.Class);
+        //    return View(classTopics.ToList());
+        //}
+
+        public ActionResult Index(int? classId)
         {
-            var classTopics = db.ClassTopics.Include(c => c.Class);
-            return View(classTopics.ToList());
+            if (classId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            // Your logic to retrieve ClassTopics based on classId
+            var classTopics = db.ClassTopics.Where(ct => ct.ClassId == classId.Value).ToList();
+
+            return View(classTopics);
         }
 
         // GET: ClassTopics/Details/5
@@ -61,11 +75,6 @@ namespace NowyDziennik.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(ClassTopicViewModel model)
         {
-            if (model.ClassId == 0)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
             if (ModelState.IsValid)
             {
                 // Instantiate a new ClassTopic object
@@ -99,10 +108,16 @@ namespace NowyDziennik.Controllers
             // If model state is not valid, repopulate the SelectList for ClassId
             ViewBag.ClassId = new SelectList(db.Classes, "ClassId", "ClassName");
 
-            return View(model);
+            // Create an instance of ClassTopicViewModel and pass it to the view
+            var classTopicViewModel = new ClassTopicViewModel
+            {
+                ClassId = model.ClassId,
+                Topic = model.Topic,
+                Description = model.Description
+            };
+
+            return View(classTopicViewModel);
         }
-
-
 
 
 
@@ -127,14 +142,25 @@ namespace NowyDziennik.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ClassTopicId,Topic,Description,ClassId")] ClassTopic classTopic)
+        public ActionResult Edit([Bind(Include = "ClassTopicId,Topic,Description,ClassId")] ClassTopic classTopic, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
+                // Handle file upload
+                if (file != null && file.ContentLength > 0)
+                {
+                    using (BinaryReader reader = new BinaryReader(file.InputStream))
+                    {
+                        // Read the file content into a byte array
+                        classTopic.FileContent = reader.ReadBytes(file.ContentLength);
+                    }
+                }
+
                 db.Entry(classTopic).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
             ViewBag.ClassId = new SelectList(db.Classes, "ClassId", "ClassName", classTopic.ClassId);
             return View(classTopic);
         }
@@ -173,5 +199,19 @@ namespace NowyDziennik.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public ActionResult DownloadFile(int id)
+        {
+            ClassTopic classTopic = db.ClassTopics.Find(id);
+
+            if (classTopic != null && classTopic.FileContent != null)
+            {
+                return File(classTopic.FileContent, "application/octet-stream", "FileName.ext");
+            }
+
+            // Handle case when file or ClassTopic is not found
+            return HttpNotFound();
+        }
+
     }
 }
