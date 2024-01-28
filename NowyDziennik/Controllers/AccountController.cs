@@ -1,16 +1,15 @@
 ﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using NowyDziennik.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity; // dla Include
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using System.Data.Entity; // dla Include
 
 
 namespace NowyDziennik.Controllers
@@ -184,7 +183,7 @@ namespace NowyDziennik.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                   // Db.Users.Add(user);
+                    // Db.Users.Add(user);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
@@ -484,59 +483,19 @@ namespace NowyDziennik.Controllers
         // GET: /Account/AllUsers
         public ActionResult AllUsers()
         {
-            var users = Db.Users.ToList();
+            var users = Db.Users.Select(user => new UserViewModel
+            {
+                // Map properties from ApplicationUser to UserViewModel
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Role = user.SelectedRole,
+                Email = user.Email
+
+            }).ToList();
+
             return View(users);
         }
-
-        public ActionResult SendMessage(string userId)
-        {
-            var user = Db.Users.Find(userId);
-            var model = new SendMessageViewModel
-            {
-                ReceiverId = userId,
-                ReceiverName = $"{user.FirstName} {user.LastName}"
-            };
-            return View(model);
-        }
-
-        [HttpPost]
-        public ActionResult SendMessage(SendMessageViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var senderId = User.Identity.GetUserId();
-                var conversation = new Conversation();
-                var message = new Message
-                {
-                    Content = model.Content,
-                    SenderId = senderId,
-                    DateTime = DateTime.Now,
-                    Conversation = conversation
-                };
-
-                var receiver = Db.Users.Find(model.ReceiverId);
-                var sender = Db.Users.Find(senderId);
-
-                if (receiver != null && sender != null)
-                {
-                    receiver.Conversations.Add(conversation);
-                    sender.Conversations.Add(conversation);
-                    Db.Messages.Add(message);
-                    Db.SaveChanges();
-                    return RedirectToAction("Conversation", new { conversationId = conversation.ConversationId });
-                }
-            }
-
-            // W przypadku błędów walidacji
-            return View(model);
-        }
-
-        public ActionResult Conversation(int conversationId)
-        {
-            var conversation = Db.Conversations.Include(c => c.Messages).FirstOrDefault(c => c.ConversationId == conversationId);
-            return View(conversation);
-        }
-
 
         #region Helpers
         // Used for XSRF protection when adding external logins
@@ -597,6 +556,4 @@ namespace NowyDziennik.Controllers
         }
         #endregion
     }
-
-
 }

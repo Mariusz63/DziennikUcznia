@@ -14,18 +14,18 @@ namespace NowyDziennik.Models
         public int TestId { get; set; }
         public DateTime GradeDate { get; set; }
 
-      //  public int SubjectId { get; set; }
+        //  public int SubjectId { get; set; }
         public string TeacherId { get; set; }
-      //  public string StudentId { get; set; }
+        //  public string StudentId { get; set; }
 
-       // [ForeignKey("StudentId")]
-       // public virtual Student Student { get; set; }
+        // [ForeignKey("StudentId")]
+        // public virtual Student Student { get; set; }
 
         [ForeignKey("TeacherId")]
         public virtual Teacher Teacher { get; set; }
 
-       // [ForeignKey("SubjectId")]
-       // public virtual Subject Subject { get; set; }
+        // [ForeignKey("SubjectId")]
+        // public virtual Subject Subject { get; set; }
 
         public virtual ICollection<StudentGrade> StudentGrades { get; set; }
 

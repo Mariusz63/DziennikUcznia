@@ -88,7 +88,7 @@ namespace NowyDziennik.Models
 
     public class AddProfilePhotoViewModel
     {
-        [Display(Name ="ProfilePhoto")]
+        [Display(Name = "ProfilePhoto")]
         public byte[] ProfilePhoto { get; set; }
 
     }

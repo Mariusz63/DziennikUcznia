@@ -4,6 +4,7 @@ using NowyDziennik.Enum;
 using NowyDziennik.Models;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -17,8 +18,8 @@ namespace NowyDziennik.Models
         public string SelectedRole { get; set; } = RolesEnum.Student.ToString();
         public byte[] ProfilePhoto { get; set; }
 
-        public virtual ICollection<Conversation> Conversations { get; set; } = new List<Conversation>();
-
+        public virtual ICollection<Message> Messages { get; set; }
+        public virtual ICollection<MessageRecipient> MessageRecipienta { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -58,42 +59,77 @@ namespace NowyDziennik.Models
         public DbSet<AnnouncementUser> AnnouncementUser { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answer { get; set; }
-       // public DbSet<TestViewModel> TestViewModels { get; set; }
-       // public DbSet<ClassTopicViewModel> ClassTopicViewModels { get; set; }
+        // public DbSet<TestViewModel> TestViewModels { get; set; }
+        // public DbSet<ClassTopicViewModel> ClassTopicViewModels { get; set; }
         public DbSet<FileAttachment> FileAttachments { get; set; }
         public DbSet<ClassTopic> ClassTopics { get; set; }
-        public DbSet<Conversation> Conversations { get; set; }
+        public DbSet<MessageRecipient> MessageRecipients { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            // Add the configuration for the Conversation and ApplicationUser relationship
+            // Configure the Conversation - ApplicationUser relationship
 
-           // modelBuilder.Entity<Student>()
-           //     .HasMany(s => s.Subjects)
-           //     .WithMany(s => s.Students)
-           //     .Map(cs =>
-           //     {
-           //         cs.MapLeftKey("StudentId");
-           //         cs.MapRightKey("SubjectId");
-           //         cs.ToTable("StudentSubjects");
-           //     });
+       //     modelBuilder.Entity<MessageConversation>()
+       //.HasRequired(mc => mc.Message)
+       //.WithMany(m => m.MessageConversations)
+       //.HasForeignKey(mc => mc.MessageId)
+       //.WillCascadeOnDelete(false);
 
-           // modelBuilder.Entity<Student>()
-           //.HasMany(s => s.Grades)
-           //.WithOne(g => g.Student)
-           //.HasForeignKey(g => g.StudentId);
+       //     modelBuilder.Entity<MessageConversation>()
+       //         .HasRequired(mc => mc.Conversation)
+       //         .WithMany(c => c.MessageConversations)
+       //         .HasForeignKey(mc => mc.ConversationId)
+       //         .WillCascadeOnDelete(false);
 
-           //// Configure the Class - Topic relationship
-           // modelBuilder.Entity<Class>()
-           // .HasMany(c => c.ClassTopics)
-           // .WithRequired(ct => ct.Class)
-           // .HasForeignKey(ct => ct.ClassId);
+       //     modelBuilder.Entity<Message>()
+       //         .HasMany(m => m.MessageConversations)
+       //         .WithRequired(mc => mc.Message)
+       //         .HasForeignKey(mc => mc.MessageId)
+       //         .WillCascadeOnDelete(false);
 
-           // // Configure the ClassTopic-FileAttachment relationship
-           // modelBuilder.Entity<ClassTopic>()
-           //     .HasMany(ct => ct.FileAttachments)
-           //     .WithRequired(fa => fa.ClassTopic)
-           //     .HasForeignKey(fa => fa.ClassTopicId);
+       //     modelBuilder.Entity<Conversation>()
+       //         .HasMany(c => c.MessageConversations)
+       //         .WithRequired(mc => mc.Conversation)
+       //         .HasForeignKey(mc => mc.ConversationId)
+       //         .WillCascadeOnDelete(false);
+
+            //// Configure the MessageConversation - Message relationship
+            //modelBuilder.Entity<MessageConversation>()
+            //    .HasRequired(mc => mc.Message)
+            //    .WithMany(m => m.MessageConversations)
+            //    .HasForeignKey(mc => mc.MessageId)
+            //    .WillCascadeOnDelete(false); // You may choose to cascade delete or not based on your requirements
+
+
+            // modelBuilder.Entity<Student>()
+            //     .HasMany(s => s.Subjects)
+            //     .WithMany(s => s.Students)
+            //     .Map(cs =>
+            //     {
+            //         cs.MapLeftKey("StudentId");
+            //         cs.MapRightKey("SubjectId");
+            //         cs.ToTable("StudentSubjects");
+            //     });
+
+            // modelBuilder.Entity<Student>()
+            //.HasMany(s => s.Grades)
+            //.WithOne(g => g.Student)
+            //.HasForeignKey(g => g.StudentId);
+
+            //// Configure the Class - Topic relationship
+            // modelBuilder.Entity<Class>()
+            // .HasMany(c => c.ClassTopics)
+            // .WithRequired(ct => ct.Class)
+            // .HasForeignKey(ct => ct.ClassId);
+
+            // // Configure the ClassTopic-FileAttachment relationship
+            // modelBuilder.Entity<ClassTopic>()
+            //     .HasMany(ct => ct.FileAttachments)
+            //     .WithRequired(fa => fa.ClassTopic)
+            //     .HasForeignKey(fa => fa.ClassTopicId);
         }
 
     }

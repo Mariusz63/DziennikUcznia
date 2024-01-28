@@ -174,11 +174,34 @@
     <Compile Include="Controllers\ClassTopicsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Migrations\202401281216141_AddConversations.cs" />
     <Compile Include="Migrations\202401281216141_AddConversations.designer.cs">
       <DependentUpon>202401281216141_AddConversations.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\SendMessageViewModel.cs" />
+    <Compile Include="Migrations\202401281803558_UpdateConversationsRelations.cs" />
+    <Compile Include="Migrations\202401281803558_UpdateConversationsRelations.designer.cs">
+      <DependentUpon>202401281803558_UpdateConversationsRelations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202401281821280_UpdateConversationsRelations2.cs" />
+    <Compile Include="Migrations\202401281821280_UpdateConversationsRelations2.designer.cs">
+      <DependentUpon>202401281821280_UpdateConversationsRelations2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202401281826420_UpdateMessage.cs" />
+    <Compile Include="Migrations\202401281826420_UpdateMessage.designer.cs">
+      <DependentUpon>202401281826420_UpdateMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202401281838342_UpdateMessage1.cs" />
+    <Compile Include="Migrations\202401281838342_UpdateMessage1.designer.cs">
+      <DependentUpon>202401281838342_UpdateMessage1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202401281844369_UpdateMessage2.cs" />
+    <Compile Include="Migrations\202401281844369_UpdateMessage2.designer.cs">
+      <DependentUpon>202401281844369_UpdateMessage2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CombinedMessagesViewModel.cs" />
+    <Compile Include="Models\MessageRecipient.cs" />
+    <Compile Include="Models\MessageViewModel.cs" />
     <Compile Include="Enum\RolesEnum.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -241,7 +264,6 @@
     <Compile Include="Models\ClassSelectionViewModel.cs" />
     <Compile Include="Models\ClassTopic.cs" />
     <Compile Include="Models\ClassTopicViewModel.cs" />
-    <Compile Include="Models\Conversation.cs" />
     <Compile Include="Models\FileAttachment.cs" />
     <Compile Include="Models\FileType.cs" />
     <Compile Include="Models\Grade.cs" />
@@ -354,8 +376,12 @@
     <Content Include="Views\ClassTopics\Edit.cshtml" />
     <Content Include="Views\ClassTopics\Index.cshtml" />
     <Content Include="Views\Account\AllUsers.cshtml" />
-    <Content Include="Views\Account\SendMessage.cshtml" />
     <Content Include="Views\Account\Conversation.cshtml" />
+    <Content Include="Views\Messages\Create.cshtml" />
+    <Content Include="Views\Messages\Delete.cshtml" />
+    <Content Include="Views\Messages\Details.cshtml" />
+    <Content Include="Views\Messages\Edit.cshtml" />
+    <Content Include="Views\Messages\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
@@ -423,6 +449,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202401281216141_AddConversations.resx">
       <DependentUpon>202401281216141_AddConversations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401281803558_UpdateConversationsRelations.resx">
+      <DependentUpon>202401281803558_UpdateConversationsRelations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401281821280_UpdateConversationsRelations2.resx">
+      <DependentUpon>202401281821280_UpdateConversationsRelations2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401281826420_UpdateMessage.resx">
+      <DependentUpon>202401281826420_UpdateMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401281838342_UpdateMessage1.resx">
+      <DependentUpon>202401281838342_UpdateMessage1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401281844369_UpdateMessage2.resx">
+      <DependentUpon>202401281844369_UpdateMessage2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

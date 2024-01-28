@@ -15,7 +15,7 @@ namespace NowyDziennik.Models
         public int SubjectId { get; set; }
         public string TeacherId { get; set; }
         public int GradeId { get; set; }
-       // public string StudentId { get; set; }
+        // public string StudentId { get; set; }
         public float Score { get; set; }
         public int? TestId { get; set; }
 

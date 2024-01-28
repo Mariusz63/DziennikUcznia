@@ -3,14 +3,13 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using NowyDziennik.Models;
-using System.IO;
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
-using NowyDziennik.Migrations;
 
 namespace NowyDziennik.Controllers
 {
@@ -19,7 +18,7 @@ namespace NowyDziennik.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-       // private ApplicationDbContext db = ApplicationDbContext.Create();
+        // private ApplicationDbContext db = ApplicationDbContext.Create();
 
         public ManageController()
         {

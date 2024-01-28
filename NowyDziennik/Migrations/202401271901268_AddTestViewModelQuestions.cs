@@ -1,8 +1,7 @@
 ﻿namespace NowyDziennik.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class AddTestViewModelQuestions : DbMigration
     {
         public override void Up()
@@ -27,7 +26,7 @@
             AddForeignKey("dbo.Grades", "Subject_SubjectId", "dbo.Subjects", "SubjectId");
             DropColumn("dbo.Grades", "StudentId");
         }
-        
+
         public override void Down()
         {
             AddColumn("dbo.Grades", "StudentId", c => c.String(maxLength: 128));

@@ -11,11 +11,15 @@ namespace NowyDziennik.Models
         public string Content { get; set; }
         public DateTime DateAdded { get; set; }
         public int FileTypeId { get; set; }
+        public int MessageId { get; set; }
 
         [ForeignKey("FileTypeId")]
         public virtual FileType FileType { get; set; }
 
-        public virtual ICollection<AnnouncementUser> AnnouncementUsers { get; set; }
+        [ForeignKey("MessageId")]
+        public virtual Message Message { get; set; }
+
+       // public virtual ICollection<AnnouncementUser> AnnouncementUsers { get; set; }
 
     }
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace NowyDziennik.Models
+﻿namespace NowyDziennik.Models
 {
     public class UserViewModel
     {
@@ -11,6 +6,7 @@ namespace NowyDziennik.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Role { get; set; }
+        public string Email { get; set; }
     }
 
 }

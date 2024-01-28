@@ -8,6 +8,7 @@ namespace NowyDziennik.Models
         [Key]
         public int FileTypeId { get; set; }
         public string Name { get; set; }
+        public byte[] Data { get; set; }
 
         public virtual ICollection<Announcement> Announcements { get; set; }
     }

@@ -1,0 +1,96 @@
+﻿@*@model IEnumerable<NowyDziennik.Models.Message>
+
+    @{
+        ViewBag.Title = "Index";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <h2>Index</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Sender.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sender.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Content)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateTime)
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sender.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sender.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Content)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateTime)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.MessageId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.MessageId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.MessageId })
+            </td>
+        </tr>
+    }
+
+    </table>*@
+
+@model NowyDziennik.Models.CombinedMessagesViewModel
+
+<h2>Combined Messages</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<h3>Sent Messages</h3>
+<table class="table">
+    <!-- Display sent messages -->
+    @foreach (var item in Model.SentMessages)
+    {
+        <tr>
+            <td>@(item.Recipient?.FirstName)</td>
+            <td>@(item.Recipient?.LastName)</td>
+            <td>@item.Content</td>
+            <td>@item.DateTime</td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.MessageId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.MessageId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.MessageId })
+            </td>
+        </tr>
+    }
+
+    <!-- Display received messages -->
+    @foreach (var item in Model.ReceivedMessages)
+    {
+        <tr>
+            <td>@(item.Sender?.FirstName)</td>
+            <td>@(item.Sender?.LastName)</td>
+            <td>@item.Content</td>
+            <td>@item.DateTime</td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.MessageId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.MessageId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.MessageId })
+            </td>
+        </tr>
+    }
+
+</table>
