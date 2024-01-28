@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using NowyDziennik.Models;
 using System;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ namespace NowyDziennik.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        // private ApplicationDbContext db = ApplicationDbContext.Create();
+         private ApplicationDbContext db = ApplicationDbContext.Create();
 
         public ManageController()
         {
@@ -68,15 +69,33 @@ namespace NowyDziennik.Controllers
                 : "";
 
             var userId = User.Identity.GetUserId();
+            var user = await UserManager.FindByIdAsync(userId);
+
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
+                ProfilePhoto = user.ProfilePhoto, 
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email
             };
+
             return View(model);
+        }
+
+
+        private byte[] FromHttpPostedFileBaseToByte(HttpPostedFileBase photo)
+        {
+            byte[] photoBytes;
+            using (var binaryReader = new BinaryReader(photo.InputStream))
+            {
+                photoBytes = binaryReader.ReadBytes(photo.ContentLength);
+            }
+            return photoBytes;
         }
 
         //
@@ -339,7 +358,36 @@ namespace NowyDziennik.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [ActionName("UploadPhoto")]
+        public async Task<ActionResult> UpdateProfile(IndexViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var userId = User.Identity.GetUserId();
+                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+                var user = await userManager.FindByIdAsync(userId);
+
+                // Update user properties
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.Email = model.Email;
+
+                await userManager.UpdateAsync(user);
+
+                // Save changes to the database
+                db.SaveChanges();
+                ViewBag.StatusMessage = "Profile updated successfully.";
+            }
+            else
+            {
+                ViewBag.StatusMessage = "Error updating profile. Please check the provided information.";
+            }
+
+            return RedirectToAction("Index");
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> UploadPhoto(HttpPostedFileBase photo)
         {
             if (photo != null && photo.ContentLength > 0)
@@ -357,8 +405,10 @@ namespace NowyDziennik.Controllers
                     var userId = User.Identity.GetUserId();
                     var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
                     var user = await userManager.FindByIdAsync(userId);
+
                     user.ProfilePhoto = photoBytes;
                     await userManager.UpdateAsync(user);
+
                     ViewBag.StatusMessage = "Profile photo uploaded successfully.";
                 }
                 catch (Exception ex)
@@ -375,6 +425,25 @@ namespace NowyDziennik.Controllers
             // Redirect back to the Manage view
             return RedirectToAction("Index");
         }
+
+
+        [HttpPost]
+        public async Task<ActionResult> ShowAsync(IndexViewModel model)
+        {
+            var userId = User.Identity.GetUserId();
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            var user = await userManager.FindByIdAsync(userId);
+
+            // Ensure that the user and the ProfilePhoto property are not null
+            if (user != null && user.ProfilePhoto != null)
+            {
+                return File(user.ProfilePhoto, "image/jpeg");
+            }
+
+            // If there's no profile photo, you might want to handle this case accordingly
+            return Content("No profile photo available.");
+        }
+
 
         #region Helpers
         // Used for XSRF protection when adding external logins

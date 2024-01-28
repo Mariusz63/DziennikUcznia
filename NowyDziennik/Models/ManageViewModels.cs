@@ -2,6 +2,7 @@
 using Microsoft.Owin.Security;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web;
 
 namespace NowyDziennik.Models
 {
@@ -12,9 +13,19 @@ namespace NowyDziennik.Models
         public string PhoneNumber { get; set; }
         public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
+        //public HttpPostedFileBase ProfilePhoto { get; set; }
         public byte[] ProfilePhoto { get; set; }
 
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [Display(Name = "Email")]
+        public string Email { get; set; }
     }
+
 
     public class ManageLoginsViewModel
     {
