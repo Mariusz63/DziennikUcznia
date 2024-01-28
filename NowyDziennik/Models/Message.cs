@@ -8,14 +8,21 @@ namespace NowyDziennik.Models
     {
         [Key]
         public int MessageId { get; set; }
+
         [Required]
         public string Content { get; set; }
+
         public string SenderId { get; set; }
-        public DateTime DateTime { get; set; } //send time
+
+        public DateTime DateTime { get; set; }
 
         [ForeignKey("SenderId")]
         public virtual ApplicationUser Sender { get; set; }
 
+        public int ConversationId { get; set; }
 
+        [ForeignKey("ConversationId")]
+        public virtual Conversation Conversation { get; set; }
     }
+
 }

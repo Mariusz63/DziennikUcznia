@@ -174,6 +174,11 @@
     <Compile Include="Controllers\ClassTopicsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Migrations\202401281216141_AddConversations.cs" />
+    <Compile Include="Migrations\202401281216141_AddConversations.designer.cs">
+      <DependentUpon>202401281216141_AddConversations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SendMessageViewModel.cs" />
     <Compile Include="Enum\RolesEnum.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -236,6 +241,7 @@
     <Compile Include="Models\ClassSelectionViewModel.cs" />
     <Compile Include="Models\ClassTopic.cs" />
     <Compile Include="Models\ClassTopicViewModel.cs" />
+    <Compile Include="Models\Conversation.cs" />
     <Compile Include="Models\FileAttachment.cs" />
     <Compile Include="Models\FileType.cs" />
     <Compile Include="Models\Grade.cs" />
@@ -253,6 +259,7 @@
     <Compile Include="Models\TeacherClassSubject.cs" />
     <Compile Include="Models\Test.cs" />
     <Compile Include="Models\TestViewModel.cs" />
+    <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -346,6 +353,9 @@
     <Content Include="Views\ClassTopics\Details.cshtml" />
     <Content Include="Views\ClassTopics\Edit.cshtml" />
     <Content Include="Views\ClassTopics\Index.cshtml" />
+    <Content Include="Views\Account\AllUsers.cshtml" />
+    <Content Include="Views\Account\SendMessage.cshtml" />
+    <Content Include="Views\Account\Conversation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
@@ -410,6 +420,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202401272231472_AddUserPhoto.resx">
       <DependentUpon>202401272231472_AddUserPhoto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401281216141_AddConversations.resx">
+      <DependentUpon>202401281216141_AddConversations.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

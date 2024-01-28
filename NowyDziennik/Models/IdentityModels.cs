@@ -17,6 +17,9 @@ namespace NowyDziennik.Models
         public string SelectedRole { get; set; } = RolesEnum.Student.ToString();
         public byte[] ProfilePhoto { get; set; }
 
+        public virtual ICollection<Conversation> Conversations { get; set; } = new List<Conversation>();
+
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -59,6 +62,7 @@ namespace NowyDziennik.Models
        // public DbSet<ClassTopicViewModel> ClassTopicViewModels { get; set; }
         public DbSet<FileAttachment> FileAttachments { get; set; }
         public DbSet<ClassTopic> ClassTopics { get; set; }
+        public DbSet<Conversation> Conversations { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -1,0 +1,12 @@
+﻿@model NowyDziennik.Models.Conversation
+
+@{
+    ViewBag.Title = "Conversation";
+}
+
+<h2>Conversation</h2>
+
+@foreach (var message in Model.Messages)
+{
+    <p>@message.Sender.FirstName @message.Sender.LastName: @message.Content</p>
+}

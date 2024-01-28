@@ -19,7 +19,7 @@ namespace NowyDziennik.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private ApplicationDbContext db = ApplicationDbContext.Create();
+       // private ApplicationDbContext db = ApplicationDbContext.Create();
 
         public ManageController()
         {
@@ -341,16 +341,10 @@ namespace NowyDziennik.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("UploadPhoto")]
-        public async Task<ActionResult> UploadPhoto(AddProfilePhotoViewModel addUserPhoto,HttpPostedFileBase photo)
+        public async Task<ActionResult> UploadPhoto(HttpPostedFileBase photo)
         {
             if (photo != null && photo.ContentLength > 0)
             {
-                using (var ms = new MemoryStream())
-                {
-                    photo.InputStream.CopyTo(ms);
-                    addUserPhoto.ProfilePhoto = ms.ToArray();
-                }
-
                 try
                 {
                     // Convert the photo to a byte array
@@ -366,7 +360,6 @@ namespace NowyDziennik.Controllers
                     var user = await userManager.FindByIdAsync(userId);
                     user.ProfilePhoto = photoBytes;
                     await userManager.UpdateAsync(user);
-                    db.SaveChanges();
                     ViewBag.StatusMessage = "Profile photo uploaded successfully.";
                 }
                 catch (Exception ex)
