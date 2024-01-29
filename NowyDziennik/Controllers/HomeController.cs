@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using NowyDziennik.Manager;
+using System.Web.Mvc;
+using NowyDziennik.Models;
 
 namespace NowyDziennik.Controllers
 {
@@ -7,6 +9,12 @@ namespace NowyDziennik.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+        
+        public ActionResult ChangeLanguage(string lang)
+        {
+            Session["lang"] = lang;
+            return RedirectToAction("Index", "Home", new { language = lang });
         }
 
         public ActionResult About()

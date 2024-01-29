@@ -45,20 +45,20 @@ namespace NowyDziennik.Models
     public class ForgotViewModel
     {
         [Required]
-        [Display(Name = "Email")]
+        [Display(Name = "Email", ResourceType = typeof(Resource))]
         public string Email { get; set; }
     }
 
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
+        [Display(Name = "Email", ResourceType = typeof(Resource))]
         [EmailAddress]
         public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Password", ResourceType = typeof(Resource))]
         public string Password { get; set; }
 
         [Display(Name = "Remember me?")]
@@ -68,16 +68,16 @@ namespace NowyDziennik.Models
     public class RegisterViewModel
     {
         [Required]
-        [Display(Name = "FirstName")]
+        [Display(Name = "FirstName", ResourceType = typeof(Resource))]
         public string FirstName { get; set; }
 
         [Required]
-        [Display(Name = "SecondName")]
+        [Display(Name = "SecondName", ResourceType = typeof(Resource))]
         public string SecondName { get; set; }
 
         [Required]
         [Phone]
-        [Display(Name = "PhoneNum")]
+        [Display(Name = "Phone", ResourceType = typeof(Resource))]
         public string PhoneNum { get; set; }
 
         [Required]
@@ -89,21 +89,21 @@ namespace NowyDziennik.Models
 
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "Email", ResourceType = typeof(Resource))]
         public string Email { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Password", ResourceType = typeof(Resource))]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
+        [Display(Name = "Confirm password", ResourceType = typeof(Resource))]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
-        [Display(Name = "Profile Photo")]
+        [Display(Name = "Profile Photo", ResourceType = typeof(Resource))]
         public HttpPostedFileBase Photo { get; set; }
     }
 
@@ -111,17 +111,17 @@ namespace NowyDziennik.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "Email", ResourceType = typeof(Resource))]
         public string Email { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Password", ResourceType = typeof(Resource))]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
+        [Display(Name = "Confirm password", ResourceType = typeof(Resource))]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
@@ -132,7 +132,7 @@ namespace NowyDziennik.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "Email", ResourceType = typeof(Resource))]
         public string Email { get; set; }
     }
 }
