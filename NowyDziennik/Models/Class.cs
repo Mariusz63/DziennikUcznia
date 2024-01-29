@@ -15,10 +15,14 @@ namespace NowyDziennik.Models
         [ForeignKey("SupervisorId")]
         public virtual Teacher Teacher { get; set; }
 
-        public virtual ICollection<Student> Students { get; set; }
-        public virtual ICollection<TeacherClassSubject> TeacherClassSubjects { get; set; }
+        [NotMapped]
+        public int NewSubjectId { get; set; }
 
-        public virtual ICollection<ClassTopic> ClassTopics { get; set; }
+        // public virtual ICollection<Student> Students { get; set; }
+        public virtual ICollection<StudentClass> StudentClasses { get; set; }
+
+        public virtual ICollection<TeacherClassSubject> TeacherClassSubjects { get; set; }
+        public virtual ICollection<ClassSubject> ClassSubjects { get; set; }
 
     }
 }

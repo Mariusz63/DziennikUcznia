@@ -16,13 +16,14 @@ namespace NowyDziennik
             );
         }
 
-        public static void ClassTopicRoutes(RouteCollection routes)
+        public static void ClassSubjectRoutes(RouteCollection routes)
         {
-                routes.MapRoute(
-                name: "DefaultClassTopic",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-            );
+            routes.MapRoute(
+  name: "Subjects",
+  url: "Subjects/{action}/{id}",
+  defaults: new { controller = "Subjects", action = "Index", id = UrlParameter.Optional }
+);
+
 
         }
 

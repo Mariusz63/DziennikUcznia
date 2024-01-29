@@ -171,10 +171,11 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AnnouncementsController.cs" />
     <Compile Include="Controllers\ClassesController.cs" />
-    <Compile Include="Controllers\ClassTopicsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
+    <Compile Include="Controllers\SubjectsController.cs" />
+    <Compile Include="Controllers\SubjectTopicsController.cs" />
     <Compile Include="Migrations\202401281216141_AddConversations.cs" />
     <Compile Include="Migrations\202401281216141_AddConversations.designer.cs">
       <DependentUpon>202401281216141_AddConversations.cs</DependentUpon>
@@ -199,6 +200,39 @@
     <Compile Include="Migrations\202401281844369_UpdateMessage2.designer.cs">
       <DependentUpon>202401281844369_UpdateMessage2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202401291245187_UpdateSubjectUserLIst.cs" />
+    <Compile Include="Migrations\202401291245187_UpdateSubjectUserLIst.designer.cs">
+      <DependentUpon>202401291245187_UpdateSubjectUserLIst.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202401291305520_UpdateClassUsers.cs" />
+    <Compile Include="Migrations\202401291305520_UpdateClassUsers.designer.cs">
+      <DependentUpon>202401291305520_UpdateClassUsers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202401291341539_UpdateClassUsers1.cs" />
+    <Compile Include="Migrations\202401291341539_UpdateClassUsers1.designer.cs">
+      <DependentUpon>202401291341539_UpdateClassUsers1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202401291417294_UpdateClassSubjectRelations.cs" />
+    <Compile Include="Migrations\202401291417294_UpdateClassSubjectRelations.designer.cs">
+      <DependentUpon>202401291417294_UpdateClassSubjectRelations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202401291536186_UpdateClass.cs" />
+    <Compile Include="Migrations\202401291536186_UpdateClass.designer.cs">
+      <DependentUpon>202401291536186_UpdateClass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202401291649405_UpdateTests.cs" />
+    <Compile Include="Migrations\202401291649405_UpdateTests.designer.cs">
+      <DependentUpon>202401291649405_UpdateTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202401291703194_UpdateTests1.cs" />
+    <Compile Include="Migrations\202401291703194_UpdateTests1.designer.cs">
+      <DependentUpon>202401291703194_UpdateTests1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202401291734034_UpdateTests2.cs" />
+    <Compile Include="Migrations\202401291734034_UpdateTests2.designer.cs">
+      <DependentUpon>202401291734034_UpdateTests2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClassSubject.cs" />
     <Compile Include="Models\CombinedMessagesViewModel.cs" />
     <Compile Include="Models\MessageRecipient.cs" />
     <Compile Include="Models\MessageViewModel.cs" />
@@ -262,7 +296,7 @@
     <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\Class.cs" />
     <Compile Include="Models\ClassSelectionViewModel.cs" />
-    <Compile Include="Models\ClassTopic.cs" />
+    <Compile Include="Models\SubjectTopic.cs" />
     <Compile Include="Models\ClassTopicViewModel.cs" />
     <Compile Include="Models\FileAttachment.cs" />
     <Compile Include="Models\FileType.cs" />
@@ -273,10 +307,12 @@
     <Compile Include="Models\Parent.cs" />
     <Compile Include="Models\Question.cs" />
     <Compile Include="Models\Student.cs" />
+    <Compile Include="Models\StudentClass.cs" />
     <Compile Include="Models\StudentGrade.cs" />
     <Compile Include="Models\StudentSelectionViewModel.cs" />
     <Compile Include="Models\StudentSubject.cs" />
     <Compile Include="Models\Subject.cs" />
+    <Compile Include="Models\SubjectViewModel.cs" />
     <Compile Include="Models\Teacher.cs" />
     <Compile Include="Models\TeacherClassSubject.cs" />
     <Compile Include="Models\Test.cs" />
@@ -306,6 +342,10 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\colorfull-theme .css" />
+    <Content Include="Content\light2-theme.css" />
+    <Content Include="Content\dark-theme.css" />
+    <Content Include="Content\light-theme.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -360,21 +400,11 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Classes\Create.cshtml" />
-    <Content Include="Views\Classes\Delete.cshtml" />
-    <Content Include="Views\Classes\Details.cshtml" />
-    <Content Include="Views\Classes\Edit.cshtml" />
-    <Content Include="Views\Classes\Index.cshtml" />
     <Content Include="Views\Announcements\Create.cshtml" />
     <Content Include="Views\Announcements\Delete.cshtml" />
     <Content Include="Views\Announcements\Details.cshtml" />
     <Content Include="Views\Announcements\Edit.cshtml" />
     <Content Include="Views\Announcements\Index.cshtml" />
-    <Content Include="Views\ClassTopics\Create.cshtml" />
-    <Content Include="Views\ClassTopics\Delete.cshtml" />
-    <Content Include="Views\ClassTopics\Details.cshtml" />
-    <Content Include="Views\ClassTopics\Edit.cshtml" />
-    <Content Include="Views\ClassTopics\Index.cshtml" />
     <Content Include="Views\Account\AllUsers.cshtml" />
     <Content Include="Views\Account\Conversation.cshtml" />
     <Content Include="Views\Messages\Create.cshtml" />
@@ -382,6 +412,24 @@
     <Content Include="Views\Messages\Details.cshtml" />
     <Content Include="Views\Messages\Edit.cshtml" />
     <Content Include="Views\Messages\Index.cshtml" />
+    <Content Include="Views\Classes\Create.cshtml" />
+    <Content Include="Views\Classes\Delete.cshtml" />
+    <Content Include="Views\Classes\Details.cshtml" />
+    <Content Include="Views\Classes\Edit.cshtml" />
+    <Content Include="Views\Classes\Index.cshtml" />
+    <Content Include="Views\Subjects\Create.cshtml" />
+    <Content Include="Views\Subjects\Delete.cshtml" />
+    <Content Include="Views\Subjects\Details.cshtml" />
+    <Content Include="Views\Subjects\Edit.cshtml" />
+    <Content Include="Views\Subjects\Index.cshtml" />
+    <Content Include="Views\SubjectTopics\Create.cshtml" />
+    <Content Include="Views\SubjectTopics\Delete.cshtml" />
+    <Content Include="Views\SubjectTopics\Details.cshtml" />
+    <Content Include="Views\SubjectTopics\Edit.cshtml" />
+    <Content Include="Views\SubjectTopics\Index.cshtml" />
+    <Content Include="Views\SubjectTopics\CreateTest.cshtml" />
+    <Content Include="Views\SubjectTopics\AddQuestion.cshtml" />
+    <Content Include="Views\SubjectTopics\AddAnswer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
@@ -464,6 +512,30 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202401281844369_UpdateMessage2.resx">
       <DependentUpon>202401281844369_UpdateMessage2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401291245187_UpdateSubjectUserLIst.resx">
+      <DependentUpon>202401291245187_UpdateSubjectUserLIst.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401291305520_UpdateClassUsers.resx">
+      <DependentUpon>202401291305520_UpdateClassUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401291341539_UpdateClassUsers1.resx">
+      <DependentUpon>202401291341539_UpdateClassUsers1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401291417294_UpdateClassSubjectRelations.resx">
+      <DependentUpon>202401291417294_UpdateClassSubjectRelations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401291536186_UpdateClass.resx">
+      <DependentUpon>202401291536186_UpdateClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401291649405_UpdateTests.resx">
+      <DependentUpon>202401291649405_UpdateTests.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401291703194_UpdateTests1.resx">
+      <DependentUpon>202401291703194_UpdateTests1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401291734034_UpdateTests2.resx">
+      <DependentUpon>202401291734034_UpdateTests2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

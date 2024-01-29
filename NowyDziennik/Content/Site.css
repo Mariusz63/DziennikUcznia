@@ -18,3 +18,19 @@ select,
 textarea {
     max-width: 280px;
 }
+
+/* Default skin */
+.navbar-dark {
+    background-color: #343a40;
+}
+
+/* Light skin */
+.light-skin .navbar-dark {
+    background-color: #f8f9fa;
+    color: #212529;
+}
+
+/* Dark skin */
+.dark-skin .navbar-dark {
+    background-color: #212529;
+}

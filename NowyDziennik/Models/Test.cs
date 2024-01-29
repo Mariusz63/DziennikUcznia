@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NowyDziennik.Models
 {
@@ -11,16 +12,18 @@ namespace NowyDziennik.Models
         public DateTime EndTime { get; set; }
         public int MaxPoints { get; set; }
 
-        // Relacja z przedmiotem
-        public int SubjectId { get; set; }
-        public Subject Subject { get; set; }
+        public  int SubjectTopicId { get; set; }
 
-        // Relacja z nauczycielem
-        public string TeacherId { get; set; }
-        public ApplicationUser Teacher { get; set; }
+        [ForeignKey("SubjectTopicId")]
+        public virtual SubjectTopic SubjectTopic { get; set; }
+
+        public  string TeacherId { get; set; }
+        [ForeignKey("TeacherId")]
+        public virtual ApplicationUser Teacher { get; set; }
 
         // Relacja z pytaniami
         public ICollection<Question> Questions { get; set; }
+
 
         // public StudentGrade StudentGrade { get; set; }
     }

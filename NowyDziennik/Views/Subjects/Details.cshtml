@@ -1,0 +1,58 @@
+﻿@model NowyDziennik.Models.Subject
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Class</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SubjectName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubjectName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SubjectDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubjectDescription)
+        </dd>
+    </dl>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.SubjectId }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</div>
+
+<div>
+    <h4>Class Topics</h4>
+    <p>
+        @Html.ActionLink("Add Topic", "Create", "SubjectTopics", new { id = Model.SubjectId }, null)
+    </p>
+
+    <!-- Display Class Topics here -->
+    <table class="table">
+        <tr>
+            <th>Topic</th>
+            <th>Description</th>
+            <th>Action</th>
+        </tr>
+        @foreach (var topic in Model.SubjectTopics)
+        {
+            <tr>
+                <td>@topic.Topic</td>
+                <td>@topic.Description</td>
+                <td>@Html.ActionLink("Details", "Details", "SubjectTopics", new { id = topic.SubjectTopicId }, null)</td>
+            </tr>
+        }
+    </table>
+</div>

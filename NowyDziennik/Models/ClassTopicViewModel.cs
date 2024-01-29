@@ -2,14 +2,14 @@
 
 namespace NowyDziennik.Models
 {
-    public class ClassTopicViewModel
+    public class SubjectTopicViewModel
     {
-        public int ClassTopicViewModelId { get; set; }
 
         public string Topic { get; set; }
 
         public string Description { get; set; }
 
+        public int SubjectId { get; set; }
         public int ClassId { get; set; }
 
         public HttpPostedFileBase File { get; set; }

@@ -1,37 +1,26 @@
-﻿using NowyDziennik.Models;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
+using NowyDziennik.Models;
 
 namespace NowyDziennik.Controllers
 {
     public class ClassesController : Controller
     {
-        private ApplicationDbContext db = ApplicationDbContext.Create();
+        private ApplicationDbContext db =ApplicationDbContext.Create();
 
         // GET: Classes
         public ActionResult Index()
         {
-            // var classes = db.Classes.Include(@ => @.Teacher);
-            return View(db.Classes.ToList());
+            var classes = db.Classes.Include(c => c.Teacher);
+            return View(classes.ToList());
         }
 
-        // GET: Classes/Details/5
-        //public ActionResult Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Class @class = db.Classes.Find(id);
-        //    if (@class == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(@class);
-        //}
 
         // GET: Classes/Details/5
         public ActionResult Details(int? id)
@@ -41,7 +30,11 @@ namespace NowyDziennik.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Class @class = db.Classes.Include(c => c.ClassTopics).SingleOrDefault(c => c.ClassId == id);
+            //Class @class = db.Classes.Include(c => c.Teacher)
+            //                        .Include(c => c.ClassSubjects.Select(cs => cs.Subject))
+            //                        .FirstOrDefault(c => c.ClassId == id);
+            Class @class = db.Classes.Include(c => c.ClassSubjects).SingleOrDefault(c => c.ClassId == id);
+
 
             if (@class == null)
             {
@@ -50,42 +43,6 @@ namespace NowyDziennik.Controllers
 
             return View(@class);
         }
-
-        // GET: Classes/AddTopic/5
-        public ActionResult AddTopic(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            Class @class = db.Classes.Find(id);
-
-            if (@class == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(new ClassTopic { ClassId = @class.ClassId });
-        }
-
-        // POST: Classes/AddTopic/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult AddTopic([Bind(Include = "ClassTopicId,Topic,Description,ClassId")] ClassTopic classTopic)
-        {
-            if (ModelState.IsValid)
-            {
-                db.ClassTopics.Add(classTopic);
-                db.SaveChanges();
-
-                // Redirect to the Details action of the ClassTopicsController with the ClassId parameter
-                return RedirectToAction("Index", "ClassTopics", new { classId = classTopic.ClassId });
-            }
-
-            return View(classTopic);
-        }
-
 
 
 
@@ -114,22 +71,73 @@ namespace NowyDziennik.Controllers
             return View(@class);
         }
 
-        // GET: Classes/Edit/5
+        // GET: Classes/AddSubject/5
+        public ActionResult AddSubject(int? id)
+        {
+
+            Class @class = db.Classes.Find(id);
+
+            if (@class == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Load the list of all subjects
+            ViewBag.AllSubjects = new SelectList(db.Subjects, "SubjectId", "SubjectName");
+
+            return View(new ClassSubject { ClassId = @class.ClassId });
+        }
+
+
+        // POST: Classes/AddSubject/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddSubject([Bind(Include = "ClassSubjectId,Topic,Description,ClassId")] ClassSubject classSubject)
+        {
+            if (ModelState.IsValid)
+            {
+                db.ClassSubjects.Add(classSubject);
+                db.SaveChanges();
+
+                // Redirect to the CreateSubject action of the SubjectsController with the ClassId parameter
+                return RedirectToAction("Create", "Subjects", new { classId = classSubject.ClassId });
+            }
+
+            return View(classSubject);
+        }
+
+
+        // Modify the existing Edit action to include ViewBag.AllSubjects
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Class @class = db.Classes.Include(c => c.Students).SingleOrDefault(c => c.ClassId == id);
+
+            Class @class = db.Classes.Include(c => c.StudentClasses.Select(sc => sc.Student))
+                .Include(c => c.ClassSubjects.Select(cs => cs.Subject))
+                .FirstOrDefault(c => c.ClassId == id);
+
             if (@class == null)
             {
                 return HttpNotFound();
             }
+
             ViewBag.SupervisorId = new SelectList(db.Teachers, "TeacherId", "TeacherId", @class.SupervisorId);
-            ViewBag.AllStudents = new MultiSelectList(db.Students, "StudentId", "User.UserName", @class.Students.Select(s => s.StudentId));
+
+            // Load the list of all students
+            ViewBag.AllStudents = new MultiSelectList(db.Students, "StudentId", "StudentId", @class.StudentClasses.Select(sc => sc.StudentId));
+
+            // Load the list of all subjects
+            ViewBag.AllSubjects = new MultiSelectList(db.Subjects, "SubjectId", "SubjectName", @class.ClassSubjects.Select(cs => cs.SubjectId));
+
             return View(@class);
         }
+
+
+
+
 
         // POST: Classes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
@@ -140,7 +148,10 @@ namespace NowyDziennik.Controllers
         {
             if (ModelState.IsValid)
             {
-                //  db.Entry(@class).State = EntityState.Modified;
+                // Update class properties
+                db.Entry(@class).State = EntityState.Modified;
+
+                // Update the students associated with the class
                 UpdateClassStudents(@class.ClassId, selectedStudents);
 
                 db.SaveChanges();
@@ -148,27 +159,35 @@ namespace NowyDziennik.Controllers
             }
 
             ViewBag.SupervisorId = new SelectList(db.Teachers, "TeacherId", "TeacherId", @class.SupervisorId);
-            ViewBag.AllStudents = new MultiSelectList(db.Students, "StudentId", "User.UserName", selectedStudents);
-            //ViewBag.SupervisorId = new SelectList(db.Teachers, "TeacherId", "TeacherId", @class.SupervisorId);
+
+            // Reload the list of all students
+            ViewBag.AllStudents = new SelectList(db.Students, "StudentId", "StudentId");
+
             return View(@class);
         }
 
         private void UpdateClassStudents(int classId, string[] selectedStudents)
         {
-            Class @class = db.Classes.Include(c => c.Students).SingleOrDefault(c => c.ClassId == classId);
+            // Get the existing students for the class
+            var existingStudents = db.StudentClass.Where(sc => sc.ClassId == classId).ToList();
 
-            // Clear existing students
-            @class.Students.Clear();
+            // Remove students not selected in the edit form
+            foreach (var existingStudent in existingStudents)
+            {
+                if (selectedStudents == null || !selectedStudents.Contains(existingStudent.StudentId))
+                {
+                    db.StudentClass.Remove(existingStudent);
+                }
+            }
 
-            // Add selected students
+            // Add new students selected in the edit form
             if (selectedStudents != null)
             {
                 foreach (var studentId in selectedStudents)
                 {
-                    Student student = db.Students.Find(studentId);
-                    if (student != null)
+                    if (!existingStudents.Any(sc => sc.StudentId == studentId))
                     {
-                        @class.Students.Add(student);
+                        db.StudentClass.Add(new StudentClass { ClassId = classId, StudentId = studentId });
                     }
                 }
             }
@@ -199,6 +218,13 @@ namespace NowyDziennik.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        // GET: Classes/CreateSubject
+        public ActionResult CreateSubject()
+        {
+            return View();
+        }
+
 
         protected override void Dispose(bool disposing)
         {

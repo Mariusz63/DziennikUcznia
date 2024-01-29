@@ -10,9 +10,9 @@ namespace NowyDziennik.Models
         public string FileName { get; set; }
         public byte[] FileContent { get; set; }
 
-        public int ClassTopicId { get; set; }
+        public int SubjectTopicId { get; set; }
 
-        [ForeignKey("ClassTopicId")]
-        public virtual ClassTopic ClassTopic { get; set; }
+        [ForeignKey("SubjectTopicId")]
+        public virtual SubjectTopic SubjectTopics { get; set; }
     }
 }

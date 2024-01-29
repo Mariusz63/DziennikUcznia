@@ -62,39 +62,47 @@ namespace NowyDziennik.Models
         // public DbSet<TestViewModel> TestViewModels { get; set; }
         // public DbSet<ClassTopicViewModel> ClassTopicViewModels { get; set; }
         public DbSet<FileAttachment> FileAttachments { get; set; }
-        public DbSet<ClassTopic> ClassTopics { get; set; }
+        public DbSet<SubjectTopic> SubjectTopics { get; set; }
         public DbSet<MessageRecipient> MessageRecipients { get; set; }
+        public DbSet<StudentClass> StudentClass { get; set; }
+        public DbSet<ClassSubject> ClassSubjects { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<SubjectTopic>()
+           .HasMany(st => st.Tests)
+           .WithRequired(t => t.SubjectTopic)
+           .HasForeignKey(t => t.SubjectTopicId);
+
             // Add the configuration for the Conversation and ApplicationUser relationship
             // Configure the Conversation - ApplicationUser relationship
 
-       //     modelBuilder.Entity<MessageConversation>()
-       //.HasRequired(mc => mc.Message)
-       //.WithMany(m => m.MessageConversations)
-       //.HasForeignKey(mc => mc.MessageId)
-       //.WillCascadeOnDelete(false);
+            //     modelBuilder.Entity<MessageConversation>()
+            //.HasRequired(mc => mc.Message)
+            //.WithMany(m => m.MessageConversations)
+            //.HasForeignKey(mc => mc.MessageId)
+            //.WillCascadeOnDelete(false);
 
-       //     modelBuilder.Entity<MessageConversation>()
-       //         .HasRequired(mc => mc.Conversation)
-       //         .WithMany(c => c.MessageConversations)
-       //         .HasForeignKey(mc => mc.ConversationId)
-       //         .WillCascadeOnDelete(false);
+            //     modelBuilder.Entity<MessageConversation>()
+            //         .HasRequired(mc => mc.Conversation)
+            //         .WithMany(c => c.MessageConversations)
+            //         .HasForeignKey(mc => mc.ConversationId)
+            //         .WillCascadeOnDelete(false);
 
-       //     modelBuilder.Entity<Message>()
-       //         .HasMany(m => m.MessageConversations)
-       //         .WithRequired(mc => mc.Message)
-       //         .HasForeignKey(mc => mc.MessageId)
-       //         .WillCascadeOnDelete(false);
+            //     modelBuilder.Entity<Message>()
+            //         .HasMany(m => m.MessageConversations)
+            //         .WithRequired(mc => mc.Message)
+            //         .HasForeignKey(mc => mc.MessageId)
+            //         .WillCascadeOnDelete(false);
 
-       //     modelBuilder.Entity<Conversation>()
-       //         .HasMany(c => c.MessageConversations)
-       //         .WithRequired(mc => mc.Conversation)
-       //         .HasForeignKey(mc => mc.ConversationId)
-       //         .WillCascadeOnDelete(false);
+            //     modelBuilder.Entity<Conversation>()
+            //         .HasMany(c => c.MessageConversations)
+            //         .WithRequired(mc => mc.Conversation)
+            //         .HasForeignKey(mc => mc.ConversationId)
+            //         .WillCascadeOnDelete(false);
 
             //// Configure the MessageConversation - Message relationship
             //modelBuilder.Entity<MessageConversation>()

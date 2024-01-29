@@ -1,0 +1,125 @@
+﻿@model NowyDziennik.Models.SubjectTopic
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>SubjectTopic</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Subject.SubjectName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Subject.SubjectName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Topic)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Topic)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FileContent)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FileContent)
+        </dd>
+    </dl>
+</div>
+
+@if (Model.FileContent != null && Model.FileContent.Length > 0)
+{
+    <div>
+        <h4>Files</h4>
+        <hr />
+        <p>
+            @Html.ActionLink("Download File", "DownloadFile", "SubjectTopics", new { id = Model.SubjectTopicId }, null)
+        </p>
+    </div>
+}
+
+<!-- Add this section to display the list of tests -->
+@if (Model.Tests != null && Model.Tests.Any())
+{
+    <div>
+        <h4>Tests</h4>
+        <hr />
+        <table class="table">
+            <tr>
+                <th>Title</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Max Points</th>
+                <!-- Add more columns as needed -->
+            </tr>
+            @foreach (var test in Model.Tests)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(model => test.Title)</td>
+                    <td>@Html.DisplayFor(model => test.StartTime)</td>
+                    <td>@Html.DisplayFor(model => test.EndTime)</td>
+                    <td>@Html.DisplayFor(model => test.MaxPoints)</td>
+                    <!-- Add more cells as needed -->
+                </tr>
+            }
+        </table>
+    </div>
+}
+
+<div>
+    <h4>Add Test</h4>
+    <hr />
+    @using (Html.BeginForm("CreateTest", "SubjectTopics", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Tests.FirstOrDefault().Title, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Tests.FirstOrDefault().Title, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Tests.FirstOrDefault().Title, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Tests.FirstOrDefault().StartTime, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Tests.FirstOrDefault().StartTime, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Tests.FirstOrDefault().StartTime, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Tests.FirstOrDefault().EndTime, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Tests.FirstOrDefault().EndTime, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Tests.FirstOrDefault().EndTime, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Tests.FirstOrDefault().MaxPoints, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Tests.FirstOrDefault().MaxPoints, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Tests.FirstOrDefault().MaxPoints, "", new { @class = "text-danger" })
+        </div>
+
+        <input type="hidden" name="subjectId" value="@Model.SubjectId" />
+
+        <div class="form-group">
+            <input type="submit" value="Add Test" class="btn btn-primary" />
+        </div>
+    }
+</div>
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.SubjectTopicId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

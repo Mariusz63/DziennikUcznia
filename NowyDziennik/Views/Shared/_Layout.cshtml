@@ -1,12 +1,49 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var themeCookie = Context.Request.Cookies["theme"];
+    var theme = (themeCookie != null) ? themeCookie.Value : "default";
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - Dzienniczek Ucznia</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/DziennikUcznia.styles.css" asp-append-version="true" />
+
+    <link id="theme-stylesheet" rel="stylesheet" href="~/css/@(theme)-theme.css" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Bootstrap JS i Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+    @* wybor motywu *@
+    @if (theme == "light")
+    {
+        <link rel="stylesheet" href="~/Content/light2-theme.css" />
+    }
+    else if (theme == "dark")
+    {
+        <link rel="stylesheet" href="~/Content/dark-theme.css" />
+    }
+    else if (theme == "default")
+    {
+        <!-- Nieznany motyw, możesz obsłużyć to odpowiednio -->
+        <link rel="stylesheet" href="~/Content/colorfull-theme .css" />
+    }
+    else if (theme == "colorfull")
+    {
+        <link rel="stylesheet" href="~/css/default-theme.css" />
+    }
 </head>
 <body>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
@@ -16,9 +53,9 @@
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     <li class="nav-item">
                         @Html.ActionLink("Announcements", "Index", "Announcements", new { area = "" }, new { @class = "nav-link" })
                     </li>
@@ -31,10 +68,24 @@
                     <li class="nav-item">
                         @Html.ActionLink("Users", "AllUsers", "Account", new { area = "" }, new { @class = "nav-link" })
                     </li>
-                    <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Subjects", "Index", "Subjects", new { area = "" }, new { @class = "nav-link" })
+                    </li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                </ul>
-                 @Html.Partial("_LoginPartial")
+               
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="themeDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Wybierz motyw
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="themeDropdown">
+                            <a class="dropdown-item" onclick="changeTheme('light')">Light </a>
+                            <a class="dropdown-item" onclick="changeTheme('dark')">Dark </a>
+                            <a class="dropdown-item" onclick="changeTheme('default')">Default </a>
+                            <a class="dropdown-item" onclick="changeTheme('colorfull')">Colorfull </a>
+
+                        </div>
+                    </ul>
+                @Html.Partial("_LoginPartial")
             </div>
         </div>
     </nav>
@@ -42,7 +93,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Dzienniczek Ucznia</p>
         </footer>
     </div>
 
@@ -51,3 +102,16 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
+
+<script>
+    function changeTheme(selectedTheme) {
+        // Ustaw wybrany motyw w ciasteczku
+        document.cookie = "theme=" + selectedTheme;
+        // Przeładuj stronę lub zastosuj zmiany dynamicznie
+        location.reload();
+    }
+    //obsługa rozwijania listy
+    $(document).ready(function () {
+        $('.dropdown-toggle').dropdown();
+    });
+</script>
